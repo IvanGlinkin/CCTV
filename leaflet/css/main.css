@@ -1,0 +1,52 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#map {
+    height: 99vh; /* Adjusted to viewport height */
+    width: 100%; /* Adjusted to full width */
+}
+.popup-image {
+    width: 75px;
+    height: 75px;
+}
+#map-container {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 80%; /* 80% for the map */
+    height: 100vh; /* Adjusted to viewport height */
+    overflow: hidden;
+}
+#sidebar {
+    position: absolute;
+    top: 0;
+    left: 80%; /* 20% for the sidebar */
+    width: 20%;
+    height: 100vh; /* Adjusted to viewport height */
+    overflow-y: auto;
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+.sidebar-item {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+}
+.sidebar-item:hover {
+    background-color: #aaa;
+}
+.active {
+    background-color: #ccc;
+}
+.sidebar_item_img_span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.sidebar-stats {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+    margin-right: 10px;
+}
