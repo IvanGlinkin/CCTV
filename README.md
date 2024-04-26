@@ -31,8 +31,12 @@ nano ./backend/telegram_creds.py
 
 4. Launch
 ```
+nano general_settings.py // set the location and radius
 python3 start.py
 ```
+
+5. Read the data
+open ./reports-html/_combined_data.html
 
 Help message:
 -------------
