@@ -167,4 +167,4 @@ def generate_html_from_json(json_file, output_file):
         f.write(html_content)
 
 # Usage example:
-generate_html_from_json("./reports-json/_combined_data.json", "./reports-html/_combined_data.html")
+# generate_html_from_json("./reports-json/_combined_data.json", "./reports-html/_combined_data.html")
