@@ -7,7 +7,7 @@ Usage example:
 ```
 git clone https://github.com/IvanGlinkin/CCTV.git
 cd CCTV
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 2. Registering Telegram creds
