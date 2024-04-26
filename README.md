@@ -36,6 +36,7 @@ python3 start.py
 
 Help message:
 -------------
+```
 usage: start.py [-h] [-lat LATITUDE] [-long LONGITUDE] [-m METERS] [-t TIMESLEEP] [-tn TELEGRAM_NAME]
                 [-ti TELEGRAM_API_ID] [-th TELEGRAM_API_HASH]
 
@@ -57,6 +58,7 @@ optional arguments:
                         Telegram API ID
   -th TELEGRAM_API_HASH, --telegram_api_hash TELEGRAM_API_HASH
                         Telegram API hash
+```
 
 An original article:
 --------------------
