@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Markers and Distance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.51404, -0.15063], 13); // Set initial map view
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var coordinates = [
+        [51.51404, -0.15063], [51.51404, -0.1564039837353482], [51.510446718018656, -0.1564039837353482], [51.510446718018656, -0.15063045542031206], [51.510446718018656, -0.14485692710527592], [51.51404, -0.14485692710527592], [51.51763328198135, -0.14485692710527592], [51.51763328198135, -0.15063136635550303], [51.51763328198135, -0.15640580560573014], [51.51763328198135, -0.16218024485595725], [51.51404, -0.16218024485595725], [51.510446718018656, -0.16218024485595725], [51.50685343603731, -0.16218024485595725], [51.50685343603731, -0.15640717186669229], [51.50685343603731, -0.15063409887742735], [51.50685343603731, -0.1448610258881624], [51.50685343603731, -0.13908795289889747], [51.510446718018656, -0.13908795289889747], [51.51404, -0.13908795289889747], [51.51763328198135, -0.13908795289889747], [51.52122656396269, -0.13908795289889747], [51.52122656396269, -0.14486284775859629], [51.52122656396269, -0.1506377426182951], [51.52122656396269, -0.15641263747799392], [51.52122656396269, -0.16218753233769273]
+        ];
+
+        var markers = [];
+
+        // Add markers and circles
+        coordinates.forEach(function(coord) {
+            var marker = L.marker(coord).addTo(map);
+            markers.push(marker);
+
+            var circle = L.circle(coord, {
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.2,
+                radius: 500 // Adjust radius as needed
+            }).addTo(map);
+        });
+
+        // Calculate distances and draw lines with distance labels
+        for (var i = 0; i < markers.length - 1; i++) {
+            var start = markers[i].getLatLng();
+            var end = markers[i + 1].getLatLng();
+            var distance = start.distanceTo(end).toFixed(2);
+            var line = L.polyline([start, end], { color: 'red' }).addTo(map);
+            L.tooltip({ permanent: true, direction: 'right', className: 'marker-tooltip' })
+                .setContent(distance + " meters")
+                .setLatLng(start)
+                .addTo(map);
+        }
+    </script>
+</body>
+</html>
