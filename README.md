@@ -35,8 +35,7 @@ nano general_settings.py // set the location and radius
 python3 start.py
 ```
 
-5. Read the data
-open ./reports-html/_combined_data.html
+5. Read the data by opening ./reports-html/_combined_data.html
 
 Help message:
 -------------
