@@ -9,11 +9,17 @@ def generate_html_from_json(json_file, output_file):
     total_latitude = 0
     total_longitude = 0
     num_items = len(data)
-    for user_id, user_data in data.items():
-        total_latitude += user_data['coordinates_average']['latitude']
-        total_longitude += user_data['coordinates_average']['longitude']
-    average_latitude = total_latitude / num_items
-    average_longitude = total_longitude / num_items
+    if num_items > 0:
+        for user_id, user_data in data.items():
+            total_latitude += user_data['coordinates_average']['latitude']
+            total_longitude += user_data['coordinates_average']['longitude']
+        
+        average_latitude = total_latitude / num_items
+        average_longitude = total_longitude / num_items
+    else:
+        # Handle the case where there are no items in the data
+        average_latitude = 0
+        average_longitude = 0
 
     # Generate JavaScript code for average coordinates
     average_coordinates_js = f"var map = L.map('map').setView([{average_latitude}, {average_longitude}], 2);\n"
