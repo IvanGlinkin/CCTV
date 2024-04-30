@@ -78,10 +78,6 @@ optional arguments:
                         Telegram API hash
 ```
 
-An original article:
---------------------
-[]()
-
 Video example:
 --------------
 ![https://github.com/IvanGlinkin/media_support/blob/main/CCTV_Github.mp4](https://github.com/IvanGlinkin/media_support/blob/main/CCTV_Github.mp4?raw=true)
