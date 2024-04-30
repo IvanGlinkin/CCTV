@@ -34,11 +34,11 @@ def generate_html_from_json(json_file, output_file):
         coordinates = user_data['coordinates_average']
         latitude = coordinates['latitude']
         longitude = coordinates['longitude']
-        image_url = f"avatars/{user_data['username'] or '_no_avatar'}.jpg"
+        image_url = f"avatars/{user_id}-{user_data['username'] or '.no_avatar'}.jpg"
         if path.exists("./" + image_url):
             image_url = "../" + image_url
         else:
-            image_url = "../avatars/_no_avatar.jpg"
+            image_url = "../avatars/.no_avatar.jpg"
         name = f"{first_name} {last_name}"
         coordinates_text = f"<br> • latitude: {latitude}<br> • longitude: {longitude}"
         datetime = user_data['coordinates'][0][2] if user_data['coordinates'] else ""

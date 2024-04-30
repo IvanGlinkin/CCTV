@@ -6,11 +6,10 @@ import webbrowser
 from telethon.sync import TelegramClient
 from telethon import functions, types
 from datetime import datetime
-from time import sleep
 from backend.general_settings import meters, latitude, longitude, timesleep
 from backend.json_into_html import generate_html_from_json
 from backend.telegram_creds import telegram_name, telegram_api_id, telegram_api_hash
-from backend.functions import generate_pattern, calculate_length, calculate_coordinates, load_existing_data
+from backend.functions import countdown_timer, generate_pattern, calculate_length, calculate_coordinates, load_existing_data
 from backend.combine_data import combine_data
 from backend.banners import banner, print_geo_coordinater, pring_city_by_geo, print_len_steps, print_telegram_initialization, print_successfully, print_start_harvesting, print_current_step, print_update_local_json, print_update_html, print_files_stored, print_combined_data, finishing_application
 from bs4 import BeautifulSoup
@@ -116,6 +115,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
     users_data = load_existing_data(report_json_directory + filename)
 
     # Iterate over latitude and longitude pairs in step_coordinates
+    print_start_harvesting()
     for latitude, longitude in step_coordinates:
         result = client(functions.contacts.GetLocatedRequest(
             geo_point=types.InputGeoPoint(
@@ -126,11 +126,10 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
         ))
 
         # Print the step and its coordinates
-        print_start_harvesting()
         step += 1
 
         # Print current step with coordinates
-        print_current_step(step, latitude, longitude) 
+        print_current_step(f"{step}/{len(step_coordinates)}", latitude, longitude)
 
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
@@ -156,36 +155,6 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
                                         "coordinates": [],
                                         "coordinates_average": {"latitude": 0, "longitude": 0, "timestamp": 0}
                                     }
-                                    # Download avatar
-                                    if username:
-                                      avatar_filename = path.join(avatar_directory, f"{username}.jpg")
-                                      if avatar_filename and not path.exists(avatar_filename):
-                                          try:
-                                              # Construct the URL for the user's Telegram page
-                                              user_url = f"https://t.me/{username}"
-                                              # Send a GET request to fetch the HTML content
-                                              response = requests.get(user_url)
-                                              # Parse the HTML content
-                                              soup = BeautifulSoup(response.text, 'html.parser')
-                                              # Find the <meta> tag with property="og:image"
-                                              meta_tag = soup.find("meta", property="og:image")
-                                              if meta_tag:
-                                                  # Extract the content attribute value (image URL)
-                                                  image_url = meta_tag["content"]
-                                                  # Send a GET request to download the photo
-                                                  response = requests.get(image_url)
-                                                  if response.status_code == 200:
-                                                      # Save the photo to the specified directory
-                                                      with open(avatar_filename, 'wb') as f:
-                                                          f.write(response.content)
-                                                      print(f"Profile photo for {username} downloaded successfully")
-                                                  else:
-                                                      print(f"Failed to download profile photo for {username}. Status code: {response.status_code}")
-                                              else:
-                                                  print(f"No profile photo found for {username}")
-                                          except Exception as e:
-                                              print(f"Error downloading profile photo for {username}: {e}")
-                                                    
                                 # Append new coordinates
                                 users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
 
@@ -203,21 +172,20 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
             dump(users_data, file, indent=4)
         print_successfully()
 
-        # Generate the HTML file from JSON
-        print_update_html()
-        generate_html_from_json(report_json_directory + filename + ".json", report_html_directory + filename + ".html")
-        print_successfully()
-
         if not step == len(step_coordinates):
-            # Sleep before processing the next coordinates
-            sleep(timesleep)
+            countdown_timer(timesleep)
 
 # Print generated JSON and HTML files path
 print_files_stored(report_json_directory, report_html_directory, filename)
 
 # Combine all JSON files together and generate the global map
 print_combined_data()
-combine_data()
+combine_data(report_json_directory, report_html_directory, avatar_directory)
+
+# Generate the HTML file from JSON
+print_update_html()
+generate_html_from_json(report_json_directory + filename + ".json", report_html_directory + filename + ".html")
+print_successfully()
 
 current_directory = getcwd()
 html_file_current = path.join(current_directory, report_html_directory + filename + ".html")
