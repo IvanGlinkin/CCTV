@@ -96,7 +96,7 @@ for i, steps in enumerate(pattern):
     else:
         direction = 'north'
     for _ in range(steps):
-        latitude, longitude = calculate_coordinates(latitude, longitude, direction, 0.4)  # 400 meters in kilometers
+        latitude, longitude = calculate_coordinates(latitude, longitude, direction, 0.6)  # 600 meters in kilometers
         step_coordinates.append((latitude, longitude))
 
 ### Print number of steps
