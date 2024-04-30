@@ -1,4 +1,5 @@
 from os import path, makedirs, getcwd
+import requests
 from json import dump
 import argparse
 import webbrowser
@@ -12,6 +13,7 @@ from backend.telegram_creds import telegram_name, telegram_api_id, telegram_api_
 from backend.functions import generate_pattern, calculate_length, calculate_coordinates, load_existing_data
 from backend.combine_data import combine_data
 from backend.banners import banner, print_geo_coordinater, pring_city_by_geo, print_len_steps, print_telegram_initialization, print_successfully, print_start_harvesting, print_current_step, print_update_local_json, print_update_html, print_files_stored, print_combined_data, finishing_application
+from bs4 import BeautifulSoup
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Custom settings for script launch')
@@ -156,13 +158,33 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
                                     }
                                     # Download avatar
                                     if username:
-                                        avatar_filename = path.join(avatar_directory, f"{username}.jpg")
-                                        if avatar_filename:
-                                            if not path.exists(avatar_filename):
-                                                try:
-                                                    photo = client.download_profile_photo(username, file=avatar_directory + username, download_big=True)
-                                                except Exception as e:
-                                                    print(f"Error downloading profile photo for {username}: {e}")
+                                      avatar_filename = path.join(avatar_directory, f"{username}.jpg")
+                                      if avatar_filename and not path.exists(avatar_filename):
+                                          try:
+                                              # Construct the URL for the user's Telegram page
+                                              user_url = f"https://t.me/{username}"
+                                              # Send a GET request to fetch the HTML content
+                                              response = requests.get(user_url)
+                                              # Parse the HTML content
+                                              soup = BeautifulSoup(response.text, 'html.parser')
+                                              # Find the <meta> tag with property="og:image"
+                                              meta_tag = soup.find("meta", property="og:image")
+                                              if meta_tag:
+                                                  # Extract the content attribute value (image URL)
+                                                  image_url = meta_tag["content"]
+                                                  # Send a GET request to download the photo
+                                                  response = requests.get(image_url)
+                                                  if response.status_code == 200:
+                                                      # Save the photo to the specified directory
+                                                      with open(avatar_filename, 'wb') as f:
+                                                          f.write(response.content)
+                                                      print(f"Profile photo for {username} downloaded successfully")
+                                                  else:
+                                                      print(f"Failed to download profile photo for {username}. Status code: {response.status_code}")
+                                              else:
+                                                  print(f"No profile photo found for {username}")
+                                          except Exception as e:
+                                              print(f"Error downloading profile photo for {username}: {e}")
                                                     
                                 # Append new coordinates
                                 users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
