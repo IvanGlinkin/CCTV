@@ -1,17 +1,19 @@
-from math import radians, pi, cos
-from os import path, listdir
-from json import load, dump
-from requests import get
-from time import sleep
-from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
+from json import dump, load
+from math import cos, pi, radians
+from os import listdir, path
+from time import sleep
+
+from bs4 import BeautifulSoup
+from requests import get
+
 
 def generate_pattern(length):
     pattern = []
     pattern.extend([1, 1, 1])  # Start with three occurrences of 1
     for i in range(2, (length - 4) // 2):
         pattern.extend([i, i])
-    pattern.append((length - 3) // 2 - 1) 
+    pattern.append((length - 3) // 2 - 1)
     return pattern
 
 def calculate_length(metres):
@@ -65,7 +67,7 @@ def combine_json_files(folder_path, output_file):
             with open(file_path, 'r') as file:
                 data = load(file)
                 combined_data.update(data)  # Merge dictionaries
-    
+
     with open(output_file, 'w') as output:
         dump(combined_data, output, indent=4)
 

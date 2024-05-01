@@ -1,18 +1,39 @@
-from os import path, makedirs, getcwd
-import requests
-from json import dump
 import argparse
 import webbrowser
-from telethon.sync import TelegramClient
-from telethon import functions, types
+import sys
 from datetime import datetime
-from backend.general_settings import meters, latitude, longitude, timesleep
-from backend.json_into_html import generate_html_from_json
-from backend.telegram_creds import telegram_name, telegram_api_id, telegram_api_hash
-from backend.functions import countdown_timer, generate_pattern, calculate_length, calculate_coordinates, load_existing_data
+from json import dump
+from os import getcwd, makedirs, path
+
+from backend.banners import (
+    banner,
+    finishing_application,
+    pring_city_by_geo,
+    print_combined_data,
+    print_current_step,
+    print_files_stored,
+    print_geo_coordinater,
+    print_len_steps,
+    print_start_harvesting,
+    print_successfully,
+    print_telegram_initialization,
+    print_update_html,
+    print_update_local_json,
+)
 from backend.combine_data import combine_data
-from backend.banners import banner, print_geo_coordinater, pring_city_by_geo, print_len_steps, print_telegram_initialization, print_successfully, print_start_harvesting, print_current_step, print_update_local_json, print_update_html, print_files_stored, print_combined_data, finishing_application
-from bs4 import BeautifulSoup
+from backend.functions import (
+    calculate_coordinates,
+    calculate_length,
+    countdown_timer,
+    generate_pattern,
+    load_existing_data,
+)
+from backend.general_settings import latitude, longitude, meters, speed_kmh, timesleep
+from backend.json_into_html import generate_html_from_json
+from backend.telegram_creds import telegram_api_hash, telegram_api_id, telegram_name
+from telethon import functions, types
+from telethon.errors import FloodWaitError
+from telethon.sync import TelegramClient
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Custom settings for script launch')
@@ -111,19 +132,35 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
     client.connect()
     print_successfully()
 
+    time_adjusted = round(0.6*3600/speed_kmh) # seconds to cover distance 600 meters
+    if timesleep < time_adjusted:
+        print(f"[ ! ] Configured timesleep {timesleep}s is too low to cover all points with configured speed {speed_kmh} km/h")
+        print(f"[ ! ] Adjusting sleep time to {time_adjusted}s according to calculated distances")
+        timesleep = time_adjusted
+
     # Load existing data from file
-    users_data = load_existing_data(report_json_directory + filename)
+    users_data = load_existing_data(f"{report_json_directory}{filename}")
 
     # Iterate over latitude and longitude pairs in step_coordinates
     print_start_harvesting()
     for latitude, longitude in step_coordinates:
-        result = client(functions.contacts.GetLocatedRequest(
-            geo_point=types.InputGeoPoint(
-                lat=latitude,
-                long=longitude,
-                accuracy_radius=500
-            )
-        ))
+        try:
+          result = client(functions.contacts.GetLocatedRequest(
+              geo_point=types.InputGeoPoint(
+                  lat=latitude,
+                  long=longitude,
+                  accuracy_radius=500
+              )
+          ))
+        except FloodWaitError as e:
+          print(f"[ ! ] FloodWaitError: {e}")
+
+          # Check if the waiting time exceeds the threshold
+          if e.seconds > 300:
+              print(f"[ ! ] Waiting time is too long, try again in {round(e.seconds/3600)} hours. Exiting program.")
+              sys.exit()
+          countdown_timer(e.seconds)
+          continue
 
         # Print the step and its coordinates
         step += 1
@@ -164,8 +201,6 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
 
                                 # Update the average coordinates
                                 users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude, "longitude": avg_longitude}
-        
-        
         # Write the updated data to the file
         print_update_local_json()
         with open(report_json_directory + filename + ".json", 'w') as file:
