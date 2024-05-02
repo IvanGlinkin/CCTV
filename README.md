@@ -31,7 +31,7 @@ nano ./backend/telegram_creds.py
 
 4. Launch
 ```
-nano general_settings.py // set the location and radius
+nano ./backend/general_settings.py // set the location and radius
 python3 start.py
 ```
 
