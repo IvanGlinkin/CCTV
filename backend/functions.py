@@ -66,7 +66,10 @@ def combine_json_files(folder_path, output_file):
 # Get the city based on coordinates
 def get_location_details(latitude, longitude):
     url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=json"
-    response = get(url)
+    headers = {
+    'User-Agent': 'CCTV Bot'
+	}
+    response = get(url, headers=headers)
     data = response.json()
     if 'address' in data:
         town = data['address'].get('town', '')
