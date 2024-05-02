@@ -48,7 +48,7 @@ def print_current_step(step, lat, lon):
 
 def print_update_local_json():
     print("\t\t[ > ] Harvesting data finished")
-    print("\t\t[ > ] Generating JSON file...", end="")
+    print("\t\t[ > ] Updating JSON file...", end="")
 
 def print_update_html():
     print("\t\t[ > ] Generating HTML file...", end="")

@@ -130,8 +130,14 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
     client.connect()
     print_successfully()
 
-    # Load existing data from file
-    users_data = load_existing_data(report_json_directory + filename)
+    time_adjusted = round(0.6*3600/speed_kmh) # seconds to cover distance 600 meters
+    if timesleep < time_adjusted:
+        print(f"[ ! ] Configured timesleep {timesleep}s is too low to cover all points with configured speed {speed_kmh} km/h")
+        print(f"[ ! ] Adjusting sleep time to {time_adjusted}s according to calculated distances")
+        timesleep = time_adjusted
+
+    # Initialize the dictionary to store user data
+    users_data = {}
 
     # Iterate over latitude and longitude pairs in step_coordinates
     for latitude, longitude in step_coordinates:
@@ -197,25 +203,28 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
 
         # Write the updated data to the file
         print_update_local_json()
-        with open(report_json_directory + filename + ".json", 'w', encoding='utf-8') as file:
+        with open(f"{report_json_directory}{filename}.json", 'w', encoding='utf-8') as file:
             dump(users_data, file, indent=4)
-        print_successfully()
-
-        # Generate the HTML file from JSON
-        print_update_html()
-        generate_html_from_json(report_json_directory + filename + ".json", report_html_directory + filename + ".html")
         print_successfully()
 
         if not step == len(step_coordinates):
             # Sleep before processing the next coordinates
             sleep(timesleep)
 
+#Download avatars
+download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
+
+# Generate the HTML file from JSON
+print_update_html()
+generate_html_from_json(f"{report_json_directory}{filename}.json", f"{report_html_directory}{filename}.html")
+print_successfully()
+
 # Print generated JSON and HTML files path
 print_files_stored(report_json_directory, report_html_directory, filename)
 
 # Combine all JSON files together and generate the global map
 print_combined_data()
-combine_data()
+combine_data(report_json_directory, report_html_directory)
 
 current_directory = getcwd()
 html_file_current = path.join(current_directory, report_html_directory + filename + ".html")
