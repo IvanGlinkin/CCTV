@@ -1,4 +1,5 @@
 import argparse
+import sys
 import webbrowser
 from datetime import datetime
 from json import dump
@@ -24,8 +25,9 @@ from backend.combine_data import combine_data
 from backend.functions import (
     calculate_coordinates,
     calculate_length,
+    countdown_timer,
+    download_avatars,
     generate_pattern,
-    load_existing_data,
 )
 from backend.general_settings import latitude, longitude, meters, timesleep
 from backend.json_into_html import generate_html_from_json
@@ -141,20 +143,30 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
 
     # Iterate over latitude and longitude pairs in step_coordinates
     for latitude, longitude in step_coordinates:
-        result = client(functions.contacts.GetLocatedRequest(
-            geo_point=types.InputGeoPoint(
-                lat=latitude,
-                long=longitude,
-                accuracy_radius=500
-            )
-        ))
+        try:
+          result = client(functions.contacts.GetLocatedRequest(
+              geo_point=types.InputGeoPoint(
+                  lat=latitude,
+                  long=longitude,
+                  accuracy_radius=500
+              )
+          ))
+        except FloodWaitError as e:
+          print(f"[ ! ] FloodWaitError: {e}")
+
+          # Check if the waiting time exceeds the threshold
+          if e.seconds > 300:
+              print(f"[ ! ] Waiting time is too long, try again in {round(e.seconds/3600)} hours. Exiting program.")
+              sys.exit()
+          countdown_timer(e.seconds)
+          continue
 
         # Print the step and its coordinates
         print_start_harvesting()
         step += 1
 
         # Print current step with coordinates
-        print_current_step(step, latitude, longitude)
+        print_current_step(f"{step}/{len(step_coordinates)}", latitude, longitude)
 
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
@@ -180,16 +192,6 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
                                         "coordinates": [],
                                         "coordinates_average": {"latitude": 0, "longitude": 0, "timestamp": 0}
                                     }
-                                    # Download avatar
-                                    if username:
-                                        avatar_filename = path.join(avatar_directory, f"{username}.jpg")
-                                        if avatar_filename:
-                                            if not path.exists(avatar_filename):
-                                                try:
-                                                    photo = client.download_profile_photo(username, file=avatar_directory + username, download_big=True)
-                                                except Exception as e:
-                                                    print(f"Error downloading profile photo for {username}: {e}")
-
                                 # Append new coordinates
                                 users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
 
@@ -210,6 +212,11 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
         if not step == len(step_coordinates):
             # Sleep before processing the next coordinates
             sleep(timesleep)
+
+# Generate the HTML file from JSON
+print_update_html()
+generate_html_from_json(f"{report_json_directory}{filename}.json", f"{report_html_directory}{filename}.html")
+print_successfully()
 
 #Download avatars
 download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
