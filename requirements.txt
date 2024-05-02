@@ -1,6 +1,2 @@
-beautifulsoup4==4.12.3
-folium==0.16.0
-PyQt5==5.15.10
-PyQt5_sip==12.13.0
 Requests==2.31.0
-telethon==1.35.0
+Telethon==1.34.0
