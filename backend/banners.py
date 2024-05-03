@@ -62,5 +62,5 @@ def print_combined_data():
     print("\n[ * ] Combining all JSON files together and generating the global HTML map file")
 
 def finishing_application():
-    print("\n[ * ] Everithing has been executed successfully!")
+    print("\n[ * ] Everything has been executed successfully!")
     print("\t[ * * ] Enjoy your CCTV data!")
