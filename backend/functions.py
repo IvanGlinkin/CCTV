@@ -1,7 +1,10 @@
+from concurrent.futures import ThreadPoolExecutor
 from json import dump, load
 from math import cos, pi, radians
 from os import listdir, path
+from time import sleep
 
+from bs4 import BeautifulSoup
 from requests import get
 
 
@@ -47,14 +50,6 @@ def calculate_coordinates(lat, lon, direction, distance):
         raise ValueError("Invalid direction")
     return new_lat, new_lon
 
-# Function to load existing data from file
-def load_existing_data(filename):
-    existing_data = {}
-    if path.exists(filename):
-        with open(filename, 'r') as file:
-            existing_data = load(file)
-    return existing_data
-
 # Function to combine all json files into one
 def combine_json_files(folder_path, output_file):
     combined_data = {}
@@ -83,3 +78,54 @@ def get_location_details(latitude, longitude):
         return town, city, country
     else:
         return None, None, None
+
+def countdown_timer(duration):
+    for remaining in range(duration, 0, -1):
+        print(f"\t\t[ > ] Sleeping for {remaining} seconds before processing the next coordinates...", end="\r")
+        sleep(1)
+    print(" " * 100, end="\r")  # Clear the line after countdown
+
+#Download avatars
+def download_avatar(user_id, username, user_url, output_folder):
+    avatar_filename = path.join(output_folder, f"{user_id}-{username}.jpg")
+    if username is None:
+        return
+
+    if path.exists(avatar_filename):
+        print(f"Avatar for user {user_id}-{username} already exists. Skipping download.")
+        return
+
+    try:
+        response = get(user_url)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            meta_tag = soup.find("meta", property="og:image")
+            if meta_tag and "cdn-telegram.org" in meta_tag["content"]:
+                image_url = meta_tag["content"]
+                response = get(image_url)
+                if response.status_code == 200:
+                    with open(avatar_filename, 'wb') as image_file:
+                        image_file.write(response.content)
+                    print(f"Downloaded avatar for user {user_id}-{username} successfully")
+                else:
+                    print(f"Failed to download avatar for user {user_id}-{username}. Status code: {response.status_code}")
+            else:
+                print(f"No profile photo found for user {user_id}-{username}")
+        else:
+            print(f"Failed to fetch user page for user {user_id}-{username}. Status code: {response.status_code}")
+    except Exception as e:
+        print(f"Error downloading avatar for user {user_id}-{username}: {e}")
+
+def download_avatars(json_file, output_folder):
+    print(f"Starting avatars download based on {json_file}...")
+    with open(json_file, 'r') as f:
+        data = load(f)
+
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        for user_id, user_data in data.items():
+            # Skip users without a photo_id
+            if user_data.get('photo_id') is None:
+                continue
+            username = user_data.get('username', '')
+            user_url = f"https://t.me/{username}"
+            executor.submit(download_avatar, user_id, username, user_url, output_folder)
