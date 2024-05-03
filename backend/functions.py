@@ -1,14 +1,16 @@
-from math import radians, pi, cos
-from os import path, listdir
-from json import load, dump
+from json import dump, load
+from math import cos, pi, radians
+from os import listdir, path
+
 from requests import get
+
 
 def generate_pattern(length):
     pattern = []
     pattern.extend([1, 1, 1])  # Start with three occurrences of 1
     for i in range(2, (length - 4) // 2):
         pattern.extend([i, i])
-    pattern.append((length - 3) // 2 - 1) 
+    pattern.append((length - 3) // 2 - 1)
     return pattern
 
 def calculate_length(metres):
@@ -17,7 +19,7 @@ def calculate_length(metres):
         return metres
     else:
         return (metres - remainder + 800)
-    
+
 # Function to calculate coordinates based on steps and direction
 def calculate_coordinates(lat, lon, direction, distance):
     # Radius of the Earth in kilometers
@@ -62,7 +64,7 @@ def combine_json_files(folder_path, output_file):
             with open(file_path, 'r') as file:
                 data = load(file)
                 combined_data.update(data)  # Merge dictionaries
-    
+
     with open(output_file, 'w') as output:
         dump(combined_data, output, indent=4)
 
