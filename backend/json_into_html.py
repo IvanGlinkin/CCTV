@@ -1,6 +1,7 @@
 from json import load
 from os import path
 
+
 def generate_html_from_json(json_file, output_file):
     with open(json_file, 'r') as f:
         data = load(f)
@@ -13,7 +14,7 @@ def generate_html_from_json(json_file, output_file):
         for user_id, user_data in data.items():
             total_latitude += user_data['coordinates_average']['latitude']
             total_longitude += user_data['coordinates_average']['longitude']
-        
+
         average_latitude = total_latitude / num_items
         average_longitude = total_longitude / num_items
     else:

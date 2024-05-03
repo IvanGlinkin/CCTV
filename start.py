@@ -1,17 +1,37 @@
-from os import path, makedirs, getcwd
-from json import dump
 import argparse
 import webbrowser
-from telethon.sync import TelegramClient
-from telethon import functions, types
 from datetime import datetime
+from json import dump
+from os import getcwd, makedirs, path
 from time import sleep
-from backend.general_settings import meters, latitude, longitude, timesleep
-from backend.json_into_html import generate_html_from_json
-from backend.telegram_creds import telegram_name, telegram_api_id, telegram_api_hash
-from backend.functions import generate_pattern, calculate_length, calculate_coordinates, load_existing_data
+
+from backend.banners import (
+    banner,
+    finishing_application,
+    pring_city_by_geo,
+    print_combined_data,
+    print_current_step,
+    print_files_stored,
+    print_geo_coordinater,
+    print_len_steps,
+    print_start_harvesting,
+    print_successfully,
+    print_telegram_initialization,
+    print_update_html,
+    print_update_local_json,
+)
 from backend.combine_data import combine_data
-from backend.banners import banner, print_geo_coordinater, pring_city_by_geo, print_len_steps, print_telegram_initialization, print_successfully, print_start_harvesting, print_current_step, print_update_local_json, print_update_html, print_files_stored, print_combined_data, finishing_application
+from backend.functions import (
+    calculate_coordinates,
+    calculate_length,
+    generate_pattern,
+    load_existing_data,
+)
+from backend.general_settings import latitude, longitude, meters, timesleep
+from backend.json_into_html import generate_html_from_json
+from backend.telegram_creds import telegram_api_hash, telegram_api_id, telegram_name
+from telethon import functions, types
+from telethon.sync import TelegramClient
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Custom settings for script launch')
@@ -128,7 +148,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
         step += 1
 
         # Print current step with coordinates
-        print_current_step(step, latitude, longitude) 
+        print_current_step(step, latitude, longitude)
 
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
@@ -163,7 +183,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
                                                     photo = client.download_profile_photo(username, file=avatar_directory + username, download_big=True)
                                                 except Exception as e:
                                                     print(f"Error downloading profile photo for {username}: {e}")
-                                                    
+
                                 # Append new coordinates
                                 users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
 
@@ -173,8 +193,8 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
 
                                 # Update the average coordinates
                                 users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude, "longitude": avg_longitude}
-        
-        
+
+
         # Write the updated data to the file
         print_update_local_json()
         with open(report_json_directory + filename + ".json", 'w') as file:

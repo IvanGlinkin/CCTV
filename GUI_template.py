@@ -1,12 +1,28 @@
 import os
 from sys import argv, exit
 from webbrowser import open
-from folium import Marker, Map
+
+from backend.general_settings import latitude, longitude, meters
+from folium import Map, Marker
 from folium.plugins import MousePosition
 from PyQt5.QtCore import Qt
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QApplication, QWidget, QSplitter, QMainWindow, QAction, QVBoxLayout, QLabel, QDialog, QPushButton, QLineEdit, QMessageBox, QHBoxLayout, QSlider
-from backend.general_settings import meters, latitude, longitude
+from PyQt5.QtWidgets import (
+    QAction,
+    QApplication,
+    QDialog,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QSlider,
+    QSplitter,
+    QVBoxLayout,
+    QWidget,
+)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,7 +50,7 @@ class MainWindow(QMainWindow):
         # Create bottom
         bottom_widget = QWidget()
         bottom_widget.setStyleSheet("background-color: black; color: white")  # Set background color
-        
+
         # Add widgets to bottom splitter
         upper_splitter.addWidget(upper_left_widget)
         upper_splitter.addWidget(bottom_widget)
@@ -63,7 +79,7 @@ class MainWindow(QMainWindow):
 
 
 
-    
+
 
 
 
@@ -72,7 +88,8 @@ class MainWindow(QMainWindow):
 
 
     def load_map(self):
-        from backend.general_settings import latitude as default_latitude, longitude as default_longitude
+        from backend.general_settings import latitude as default_latitude
+        from backend.general_settings import longitude as default_longitude
         m = Map(location=[default_latitude, default_longitude], zoom_start=12)
 
         MousePosition().add_to(m)  # Add mouse position display
@@ -83,7 +100,7 @@ class MainWindow(QMainWindow):
         Marker([middle_latitude, middle_longitude]).add_to(m)
 
         m_html = m.get_root().render()
-        self.browser.setHtml(m_html)  # Load the modified Folium map HTML directly into the QWebEngineView 
+        self.browser.setHtml(m_html)  # Load the modified Folium map HTML directly into the QWebEngineView
 
 
 
@@ -197,7 +214,7 @@ class MainWindow(QMainWindow):
         separator_action = QAction(self)
         separator_action.setSeparator(True)
         file_menu.addAction(separator_action)
-        file_menu.setStyleSheet("QMenu::separator { background-color: #ccc; height: 1px; margin: 5px}")  
+        file_menu.setStyleSheet("QMenu::separator { background-color: #ccc; height: 1px; margin: 5px}")
 
         exit_action = QAction('&Exit', self)
         exit_action.setShortcut('Ctrl+Q')
@@ -388,7 +405,7 @@ class TelegramSettingsDialog(QDialog):
             file_descriptor = os.open('./backend/telegram_creds.py', os.O_RDONLY)
             file_contents = os.read(file_descriptor, os.path.getsize('./backend/telegram_creds.py')).decode()
             os.close(file_descriptor)
-            
+
             for line in file_contents.split('\n'):
                 if line.startswith('phone_number'):
                     self.phone_number = line.split('=')[1].strip().strip("'")
@@ -429,7 +446,7 @@ class TelegramSettingsDialog(QDialog):
             file_descriptor = os.open('./backend/telegram_creds.py', os.O_RDONLY)
             file_contents = os.read(file_descriptor, os.path.getsize('./backend/telegram_creds.py')).decode()
             os.close(file_descriptor)
-            
+
             for line in file_contents.split('\n'):
                 if line.startswith('phone_number'):
                     self.phone_number_text.setText(line.split('=')[1].strip().strip("'"))
@@ -489,7 +506,7 @@ class GeneralSettingsDialog(QDialog):
         layout.addWidget(self.cancel_button)
 
         self.setLayout(layout)
-                
+
         # Load settings from file if it exists
         self.load_settings()
 
@@ -498,7 +515,7 @@ class GeneralSettingsDialog(QDialog):
             file_descriptor = os.open('./backend/general_settings.py', os.O_RDONLY)
             file_contents = os.read(file_descriptor, os.path.getsize('./backend/general_settings.py')).decode()
             os.close(file_descriptor)
-            
+
             for line in file_contents.split('\n'):
                 if line.startswith('meters'):
                     self.meters_text.setText(line.split('=')[1].strip())
@@ -537,7 +554,7 @@ class GeneralSettingsDialog(QDialog):
             file_descriptor = os.open('./backend/general_settings.py', os.O_RDONLY)
             file_contents = os.read(file_descriptor, os.path.getsize('./backend/general_settings.py')).decode()
             os.close(file_descriptor)
-            
+
             for line in file_contents.split('\n'):
                 if line.startswith('meters'):
                     self.meters_text.setText(line.split('=')[1].strip())

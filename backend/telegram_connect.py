@@ -1,6 +1,7 @@
 from telethon.sync import TelegramClient
-from .telegram_creds import telegram_name, telegram_api_id, telegram_api_hash
-from .banners import banner, print_telegram_initialization, print_successfully
+
+from .banners import banner, print_successfully, print_telegram_initialization
+from .telegram_creds import telegram_api_hash, telegram_api_id, telegram_name
 
 ### Banner logo
 print(banner)
