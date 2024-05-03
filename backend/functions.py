@@ -123,6 +123,9 @@ def download_avatars(json_file, output_folder):
 
     with ThreadPoolExecutor(max_workers=5) as executor:
         for user_id, user_data in data.items():
+            # Skip users without a photo_id
+            if user_data.get('photo_id') is None:
+                continue
             username = user_data.get('username', '')
             user_url = f"https://t.me/{username}"
             executor.submit(download_avatar, user_id, username, user_url, output_folder)
