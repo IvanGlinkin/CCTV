@@ -1,7 +1,10 @@
+from concurrent.futures import ThreadPoolExecutor
 from json import dump, load
 from math import cos, pi, radians
 from os import listdir, path
+from time import sleep
 
+from bs4 import BeautifulSoup
 from requests import get
 
 

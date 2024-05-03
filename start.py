@@ -29,7 +29,7 @@ from backend.functions import (
     download_avatars,
     generate_pattern,
 )
-from backend.general_settings import latitude, longitude, meters, timesleep
+from backend.general_settings import latitude, longitude, meters, speed_kmh, timesleep
 from backend.json_into_html import generate_html_from_json
 from backend.telegram_creds import telegram_api_hash, telegram_api_id, telegram_name
 from telethon import functions, types
@@ -142,6 +142,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
     users_data = {}
 
     # Iterate over latitude and longitude pairs in step_coordinates
+    print_start_harvesting()
     for latitude, longitude in step_coordinates:
         try:
           result = client(functions.contacts.GetLocatedRequest(
@@ -162,7 +163,6 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
           continue
 
         # Print the step and its coordinates
-        print_start_harvesting()
         step += 1
 
         # Print current step with coordinates
@@ -210,13 +210,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
         print_successfully()
 
         if not step == len(step_coordinates):
-            # Sleep before processing the next coordinates
-            sleep(timesleep)
-
-# Generate the HTML file from JSON
-print_update_html()
-generate_html_from_json(f"{report_json_directory}{filename}.json", f"{report_html_directory}{filename}.html")
-print_successfully()
+            countdown_timer(timesleep)
 
 #Download avatars
 download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
