@@ -197,7 +197,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
 
         # Write the updated data to the file
         print_update_local_json()
-        with open(report_json_directory + filename + ".json", 'w') as file:
+        with open(report_json_directory + filename + ".json", 'w', encoding='utf-8') as file:
             dump(users_data, file, indent=4)
         print_successfully()
 
