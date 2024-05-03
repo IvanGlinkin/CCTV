@@ -80,7 +80,7 @@ optional arguments:
 
 Video example:
 --------------
-[![Close-Curcuit Telegram Vision PoC](https://img.youtube.com/vi/y9jEiZS5pAc/0.jpg)](https://www.youtube.com/watch?v=y9jEiZS5pAc "Close-Curcuit Telegram Vision PoC")
+[![Close-Curcuit Telegram Vision PoC](https://raw.githubusercontent.com/IvanGlinkin/media_support/main/CCTV_youtube.png)](https://www.youtube.com/watch?v=y9jEiZS5pAc "Close-Curcuit Telegram Vision PoC")
 
 Screenshots:
 ------------
