@@ -80,7 +80,7 @@ optional arguments:
 
 Video example:
 --------------
-![https://github.com/IvanGlinkin/media_support/blob/main/CCTV_Github.mp4](https://github.com/IvanGlinkin/media_support/blob/main/CCTV_Github.mp4?raw=true)
+[https://www.youtube.com/watch?v=y9jEiZS5pAc](https://www.youtube.com/watch?v=y9jEiZS5pAc)
 
 Screenshots:
 ------------
