@@ -170,7 +170,7 @@ def generate_html_from_json(json_file, output_file):
 </html>
 """
     # Write HTML content to output file
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
 # Usage example:
