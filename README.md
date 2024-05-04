@@ -20,13 +20,21 @@ register the application
 get App's api_id, api_hash, title and name
 ```
 
-3. Setting up Telegram creds
+3. Settings
+Upon first launch script will create `config.yaml` file and request all needed settings.
+This settings can be manually changed later.
 ```
-nano ./backend/telegram_creds.py
-  phone_number = 'your_phone_number' // put your phone number 
-  telegram_name = 'api_name' // put your API name from the step 2
-  telegram_api_id = 'api_id' // put your API ID from the step 2
-  telegram_api_hash = 'api_hash' // put your API Hash from the step 2
+api_config:
+  api_hash: ***
+  api_id: 00000000
+  phone: "+123456789000"
+location:
+  lat: 51.51404
+  lon: -0.15063
+  meters: 1200
+misc:
+  speed_kmh: 50
+  timesleep: 30
 ```
 
 4. Launch
