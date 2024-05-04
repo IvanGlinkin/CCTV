@@ -100,7 +100,7 @@ if not path.exists(report_json_directory):
 
 ### Banner logo
 print(banner)
-### Printing geo cordinates
+### Printing geo coordinates
 print_geo_coordinater(latitude,longitude)
 ### Printing city and country by coordinates
 pring_city_by_geo(latitude,longitude)
