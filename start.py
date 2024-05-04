@@ -88,11 +88,10 @@ avatar_directory = "./avatars/"
 report_json_directory = "./reports-json/"
 report_html_directory = "./reports-html/"
 
-# Check if the avatar directory exists, create it if not
-if not path.exists(avatar_directory):
-    makedirs(avatar_directory)
-if not path.exists(report_json_directory):
-    makedirs(report_json_directory)
+# Check if the needed directories exist, create it if not
+for dir in avatar_directory, report_json_directory, report_html_directory:
+    if not path.exists(dir):
+        makedirs(dir)
 
 ### Banner logo
 print(banner)

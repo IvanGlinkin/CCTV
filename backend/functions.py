@@ -56,8 +56,8 @@ def calculate_coordinates(lat, lon, direction, distance):
 def combine_json_files(folder_path, output_file):
     combined_data = {}
     for filename in listdir(folder_path):
+        file_path = path.join(folder_path, filename)
         if filename.endswith('.json') and filename != output_file:
-            file_path = path.join(folder_path, filename)
             with open(file_path, 'r') as file:
                 data = load(file)
                 combined_data.update(data)  # Merge dictionaries
