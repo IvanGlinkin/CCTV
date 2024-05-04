@@ -20,9 +20,9 @@ register the application
 get App's api_id, api_hash, title and name
 ```
 
-3. Settings
-Upon first launch script will create `config.yaml` file and request all needed settings.
-This settings can be manually changed later.
+3. Settings<br>
+Upon first launch script will create `config.yaml` file and request all needed settings.<br>
+This settings can be manually changed later:
 ```
 api_config:
   api_hash: ***
