@@ -171,37 +171,37 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
                 for peer_located in update.peers:
-                    if peer_located.distance == 500:
-                        if isinstance(peer_located.peer, types.PeerUser):  # Check if the peer is a PeerUser
-                            user_id = peer_located.peer.user_id
-                            user_info = next((user for user in result.users if user.id == user_id), None)
-                            if user_info:
-                                # Get current timestamp
-                                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    if isinstance(peer_located, types.PeerLocated):  # Check if the peer_located is of type PeerLocated
+                        if peer_located.distance == 500:
+                            if isinstance(peer_located.peer, types.PeerUser):  # Check if the peer is a PeerUser
+                                user_id = peer_located.peer.user_id
+                                user_info = next((user for user in result.users if user.id == user_id), None)
+                                if user_info:
+                                    # Get current timestamp
+                                    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                                if user_id not in users_data:
-                                    # If the user is not in the dictionary, add them with initial data
-                                    username = user_info.username
+                                    if user_id not in users_data:
+                                        # If the user is not in the dictionary, add them with initial data
+                                        username = user_info.username
 
-                                    users_data[user_id] = {
-                                        "first_name": user_info.first_name,
-                                        "last_name": user_info.last_name,
-                                        "username": user_info.username,
-                                        "phone": user_info.phone,
-                                        "photo_id": user_info.photo.photo_id if user_info.photo else None,
-                                        "coordinates": [],
-                                        "coordinates_average": {"latitude": 0, "longitude": 0, "timestamp": 0}
-                                    }
-                                # Append new coordinates
-                                users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
+                                        users_data[user_id] = {
+                                            "first_name": user_info.first_name,
+                                            "last_name": user_info.last_name,
+                                            "username": user_info.username,
+                                            "phone": user_info.phone,
+                                            "photo_id": user_info.photo.photo_id if user_info.photo else None,
+                                            "coordinates": [],
+                                            "coordinates_average": {"latitude": 0, "longitude": 0, "timestamp": 0}
+                                        }
+                                    # Append new coordinates
+                                    users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
 
-                                # Calculate average coordinates
-                                avg_latitude = sum(coord[0] for coord in users_data[user_id]["coordinates"]) / len(users_data[user_id]["coordinates"])
-                                avg_longitude = sum(coord[1] for coord in users_data[user_id]["coordinates"]) / len(users_data[user_id]["coordinates"])
+                                    # Calculate average coordinates
+                                    avg_latitude = sum(coord[0] for coord in users_data[user_id]["coordinates"]) / len(users_data[user_id]["coordinates"])
+                                    avg_longitude = sum(coord[1] for coord in users_data[user_id]["coordinates"]) / len(users_data[user_id]["coordinates"])
 
-                                # Update the average coordinates
-                                users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude, "longitude": avg_longitude}
-
+                                    # Update the average coordinates
+                                    users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude, "longitude": avg_longitude}
 
         # Write the updated data to the file
         print_update_local_json()
