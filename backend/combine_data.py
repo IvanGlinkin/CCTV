@@ -1,9 +1,6 @@
 from .functions import combine_json_files
 from .json_into_html import generate_html_from_json
 
-def combine_data():
-    report_json_directory = "./reports-json/"
-
 def combine_data(report_json_directory="./reports-json/", report_html_directory="./reports-html/"):
 
     combine_json_files(report_json_directory, f"{report_json_directory}_combined_data.json")

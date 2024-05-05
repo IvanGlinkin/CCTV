@@ -1,5 +1,9 @@
-telegram_creds.py
+config.yaml
 reports-html
 reports-json
 avatars
 *.session
+*.session-journal
+__pycache__/
+.DS_Store
+reports-*

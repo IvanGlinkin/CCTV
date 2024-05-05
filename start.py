@@ -4,7 +4,6 @@ import webbrowser
 from datetime import datetime
 from json import dump
 from os import getcwd, makedirs, path
-from time import sleep
 
 from backend.banners import (
     banner,
@@ -28,10 +27,9 @@ from backend.functions import (
     countdown_timer,
     download_avatars,
     generate_pattern,
+    load_config,
 )
-from backend.general_settings import latitude, longitude, meters, speed_kmh, timesleep
 from backend.json_into_html import generate_html_from_json
-from backend.telegram_creds import telegram_api_hash, telegram_api_id, telegram_name
 from telethon import functions, types
 from telethon.sync import TelegramClient
 
@@ -43,32 +41,30 @@ parser.add_argument('-lat', '--latitude', type=float, help='Latitude setting')
 parser.add_argument('-long', '--longitude', type=float, help='Longitude setting')
 parser.add_argument('-m', '--meters', type=int, help='Meters setting')
 parser.add_argument('-t', '--timesleep', type=int, help='Timesleep setting')
+parser.add_argument('-s', '--speed_kmh', type=int, help='Speed setting')
 
 # Add arguments for Telegram credentials
-parser.add_argument('-tn', '--telegram_name', type=str, help='Telegram username')
+parser.add_argument('-tn', '--telegram_name', type=str, help='Telegram session name')
 parser.add_argument('-ti', '--telegram_api_id', type=int, help='Telegram API ID')
 parser.add_argument('-th', '--telegram_api_hash', type=str, help='Telegram API hash')
 
 # Parse the command-line arguments
 args = parser.parse_args()
 
+#Load or create config file
+config_file="config.yaml"
+config = load_config(config_file)
 # Update settings if provided in command-line arguments
-if args.latitude:
-    latitude = args.latitude
-if args.longitude:
-    longitude = args.longitude
-if args.meters:
-    meters = args.meters
-if args.timesleep:
-    timesleep = args.timesleep
+latitude = args.latitude if args.latitude else config['location']['lat']
+longitude = args.longitude if args.longitude else config['location']['lon']
+meters = args.meters if args.meters else config['location']['meters']
+timesleep = args.timesleep if args.timesleep else config['misc']['timesleep']
+speed_kmh = args.speed_kmh if args.speed_kmh else config['misc']['speed_kmh']
+telegram_name = args.telegram_name if args.telegram_name else "cctv"
+telegram_api_id = args.telegram_api_id if args.telegram_api_id else config['api_config']['api_id']
+telegram_api_hash = args.telegram_api_hash if args.telegram_api_hash else config['api_config']['api_hash']
+phone_number = config['api_config']['phone']
 
-# Update Telegram credentials if provided in command-line arguments
-if args.telegram_name:
-    telegram_name = args.telegram_name
-if args.telegram_api_id:
-    telegram_api_id = args.telegram_api_id
-if args.telegram_api_hash:
-    telegram_api_hash = args.telegram_api_hash
 
 # General variables
 pattern = generate_pattern((calculate_length(meters + 400) + 800) // 200)  # Adjust the length as needed (x / 2 - 2)
@@ -92,11 +88,10 @@ avatar_directory = "./avatars/"
 report_json_directory = "./reports-json/"
 report_html_directory = "./reports-html/"
 
-# Check if the avatar directory exists, create it if not
-if not path.exists(avatar_directory):
-    makedirs(avatar_directory)
-if not path.exists(report_json_directory):
-    makedirs(report_json_directory)
+# Check if the needed directories exist, create it if not
+for dir in avatar_directory, report_json_directory, report_html_directory:
+    if not path.exists(dir):
+        makedirs(dir)
 
 ### Banner logo
 print(banner)
@@ -127,7 +122,8 @@ print_len_steps(len(step_coordinates), meters)
 # Initialize the Telegram client
 print_telegram_initialization()
 
-with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash) as client:
+
+with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_version="CCTV") as client:
     # Authenticate the client
     client.connect()
     print_successfully()
