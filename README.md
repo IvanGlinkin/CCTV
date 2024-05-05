@@ -39,7 +39,6 @@ misc:
 
 4. Launch
 ```
-nano ./backend/general_settings.py // set the location and radius
 python3 start.py
 ```
 
