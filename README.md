@@ -77,8 +77,10 @@ optional arguments:
                         Meters setting
   -t TIMESLEEP, --timesleep TIMESLEEP
                         Timesleep setting
+  -s SPEED_KMH, --speed_kmh SPEED_KMH
+                        Speed setting
   -tn TELEGRAM_NAME, --telegram_name TELEGRAM_NAME
-                        Telegram username
+                        Telegram session name
   -ti TELEGRAM_API_ID, --telegram_api_id TELEGRAM_API_ID
                         Telegram API ID
   -th TELEGRAM_API_HASH, --telegram_api_hash TELEGRAM_API_HASH
