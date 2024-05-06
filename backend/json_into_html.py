@@ -113,7 +113,7 @@ def generate_html_from_json(json_file, output_file):
             var marker = L.marker(point.coordinates, {{icon: customIcon}});
 
             // Define the popup content
-            var popupContent = '<div><p><b>' + point.name + '</b><br>Username: <a href="https://t.me/' + point.username + '">' + point.username + '</a></br>Phone: ' + point.phone + '<br>Coordinates:' + point.coordinates_text + '<br>Date: ' + point.datetime + '</p><div class="image-container"><img class="rounded-marker-icon" src="' + imageUrl + '"></div></div>';
+            var popupContent = '<div><p><b>' + point.name + '</b><br>Username: <a target="_blank" href="https://t.me/' + point.username + '">' + point.username + '</a></br>Phone: ' + point.phone + '<br>Coordinates:' + point.coordinates_text + '<br>Date: ' + point.datetime + '</p><div class="image-container"><img class="rounded-marker-icon" src="' + imageUrl + '"></div></div>';
 
             // Bind the popup content to the marker
             marker.bindPopup(popupContent);
@@ -124,7 +124,7 @@ def generate_html_from_json(json_file, output_file):
             // Create sidebar item
             var sidebarItem = document.createElement('div');
             sidebarItem.className = 'sidebar-item';
-            sidebarItem.innerHTML = "<img src='" + imageUrl + "' width='40px' class=sidebar_item_img_span> <span class=sidebar_item_img_span>" + point.name + "<br>Username: <a href='https://t.me/" + point.username + "'>" + point.username + "</a>";
+            sidebarItem.innerHTML = "<img src='" + imageUrl + "' width='40px' class=sidebar_item_img_span> <span class=sidebar_item_img_span>" + point.name + "<br>Username: <a target='_blank' href='https://t.me/" + point.username + "'>" + point.username + "</a>";
             sidebarItem.setAttribute('data-lat', point.coordinates[0]);
             sidebarItem.setAttribute('data-lng', point.coordinates[1]);
 
