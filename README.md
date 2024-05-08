@@ -98,7 +98,7 @@ Media mentions:
   * https://twitter.com/404mediaco/status/1787880234294951949
   * https://twitter.com/hack_git/status/1786271191847539117
   * https://www.youtube.com/watch?v=AV6E-bUYVSs
-2. Russian Language
+2. Russian language:
   * https://dzen.ru/b/ZjMjQrQIlkH8ypnH
   * https://tgstat.ru/channel/@infosec_globe/2642
   * https://botiprobiva.org/cctv-api-dlya-otslezhivaniya-mestopolozheniya-v-telegram/
@@ -106,7 +106,7 @@ Media mentions:
   * https://holod.media/2024/05/08/rossiiskii-khaker-razrabotal/
   * https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
   * https://www.securitylab.ru/news/548052.php
-3. Italian language
+3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 
 Video example:
