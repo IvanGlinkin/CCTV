@@ -87,6 +87,23 @@ optional arguments:
                         Telegram API hash
 ```
 
+Media mentions:
+---------------
+[EN] https://www.linkedin.com/feed/update/urn:li:activity:7191073927949938688/
+[EN] https://www.404media.co/this-tool-shows-some-telegram-users-approximate-physical-location/
+[EN] https://www.newsbytesapp.com/news/science/locations-of-telegram-users-are-now-easy-to-find/story
+[EN] https://www.transforminggov.ca/taxonomy/1kd79926usd10/
+[EN] https://sector035.nl/articles/2024-18
+[EN] https://twitter.com/404mediaco/status/1787880234294951949
+[EN] https://twitter.com/hack_git/status/1786271191847539117
+[EN] https://www.youtube.com/watch?v=AV6E-bUYVSs
+[RU] https://dzen.ru/b/ZjMjQrQIlkH8ypnH
+[RU] https://tgstat.ru/channel/@infosec_globe/2642
+[RU] https://botiprobiva.org/cctv-api-dlya-otslezhivaniya-mestopolozheniya-v-telegram/
+[RU] https://istories.media/news/2024/05/07/vipusknik-universiteta-minoboroni-rf-razrabotal-instrument-kotorii-pozvolyaet-uznat-primernie-adresa-polzovatelei-telegrama/
+[RU] https://holod.media/2024/05/08/rossiiskii-khaker-razrabotal/
+[RU] https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
+
 Video example:
 --------------
 [![Close-Curcuit Telegram Vision PoC](https://raw.githubusercontent.com/IvanGlinkin/media_support/main/CCTV_youtube.png)](https://www.youtube.com/watch?v=y9jEiZS5pAc "Close-Curcuit Telegram Vision PoC")
