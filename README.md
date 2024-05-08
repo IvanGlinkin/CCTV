@@ -112,6 +112,8 @@ Media mentions:
   * https://hi-tech.mail.ru/news/109683-srochno-otklyuchite-etu-funkciyu-v-telegram-inache-vas-najdut/
 3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
+4. Ukranian langiage:
+  * https://kreschatic.kiev.ua/tehno/2024/05/08/telegram-teper-zmozhe-otrymuvaty-dani-pro-misczeznahodzhennya-korystuvachiv-mesendzhera.html
 
 Video example:
 --------------
