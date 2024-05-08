@@ -118,6 +118,7 @@ Media mentions:
 [RU] https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
 
 
+
 Video example:
 --------------
 [![Close-Curcuit Telegram Vision PoC](https://raw.githubusercontent.com/IvanGlinkin/media_support/main/CCTV_youtube.png)](https://www.youtube.com/watch?v=y9jEiZS5pAc "Close-Curcuit Telegram Vision PoC")
