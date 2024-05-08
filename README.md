@@ -117,6 +117,7 @@ Media mentions:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 4. Ukranian langiage:
   * https://kreschatic.kiev.ua/tehno/2024/05/08/telegram-teper-zmozhe-otrymuvaty-dani-pro-misczeznahodzhennya-korystuvachiv-mesendzhera.html
+  * https://dev.ua/news/telegram-1715166769
 5. Spain language:
   * https://www.adslzone.net/noticias/seguridad/telegram-acceso-ubicacion-posicion/
 
