@@ -90,24 +90,24 @@ optional arguments:
 Media mentions:
 ---------------
 1. English language:
-* https://www.linkedin.com/feed/update/urn:li:activity:7191073927949938688/
-* https://www.404media.co/this-tool-shows-some-telegram-users-approximate-physical-location/
-* https://www.newsbytesapp.com/news/science/locations-of-telegram-users-are-now-easy-to-find/story
-* https://www.transforminggov.ca/taxonomy/1kd79926usd10/
-* https://sector035.nl/articles/2024-18
-* https://twitter.com/404mediaco/status/1787880234294951949
-* https://twitter.com/hack_git/status/1786271191847539117
-* https://www.youtube.com/watch?v=AV6E-bUYVSs
+  * https://www.linkedin.com/feed/update/urn:li:activity:7191073927949938688/
+  * https://www.404media.co/this-tool-shows-some-telegram-users-approximate-physical-location/
+  * https://www.newsbytesapp.com/news/science/locations-of-telegram-users-are-now-easy-to-find/story
+  * https://www.transforminggov.ca/taxonomy/1kd79926usd10/
+  * https://sector035.nl/articles/2024-18
+  * https://twitter.com/404mediaco/status/1787880234294951949
+  * https://twitter.com/hack_git/status/1786271191847539117
+  * https://www.youtube.com/watch?v=AV6E-bUYVSs
 2. Russian Language
-* https://dzen.ru/b/ZjMjQrQIlkH8ypnH
-* https://tgstat.ru/channel/@infosec_globe/2642
-* https://botiprobiva.org/cctv-api-dlya-otslezhivaniya-mestopolozheniya-v-telegram/
-* https://istories.media/news/2024/05/07/vipusknik-universiteta-minoboroni-rf-razrabotal-instrument-kotorii-pozvolyaet-uznat-primernie-adresa-polzovatelei-telegrama/
-* https://holod.media/2024/05/08/rossiiskii-khaker-razrabotal/
-* https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
-* https://www.securitylab.ru/news/548052.php
+  * https://dzen.ru/b/ZjMjQrQIlkH8ypnH
+  * https://tgstat.ru/channel/@infosec_globe/2642
+  * https://botiprobiva.org/cctv-api-dlya-otslezhivaniya-mestopolozheniya-v-telegram/
+  * https://istories.media/news/2024/05/07/vipusknik-universiteta-minoboroni-rf-razrabotal-instrument-kotorii-pozvolyaet-uznat-primernie-adresa-polzovatelei-telegrama/
+  * https://holod.media/2024/05/08/rossiiskii-khaker-razrabotal/
+  * https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
+  * https://www.securitylab.ru/news/548052.php
 3. Italian language
-* https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
+  * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 
 Video example:
 --------------
