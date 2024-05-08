@@ -32,6 +32,7 @@ from backend.functions import (
 from backend.json_into_html import generate_html_from_json
 from telethon import functions, types
 from telethon.sync import TelegramClient
+from telethon.errors import FloodWaitError
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Custom settings for script launch')
