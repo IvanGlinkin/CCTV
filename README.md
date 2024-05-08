@@ -98,6 +98,7 @@ Media mentions:
   * https://twitter.com/404mediaco/status/1787880234294951949
   * https://twitter.com/hack_git/status/1786271191847539117
   * https://www.youtube.com/watch?v=AV6E-bUYVSs
+  * https://knowpy.com/be-careful-if-telegram-has-access-to-your-location-this-portal-reveals-your-position
 2. Russian language:
   * https://dzen.ru/b/ZjMjQrQIlkH8ypnH
   * https://tgstat.ru/channel/@infosec_globe/2642
