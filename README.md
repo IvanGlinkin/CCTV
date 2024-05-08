@@ -118,7 +118,7 @@ Media mentions:
 4. Ukranian langiage:
   * https://kreschatic.kiev.ua/tehno/2024/05/08/telegram-teper-zmozhe-otrymuvaty-dani-pro-misczeznahodzhennya-korystuvachiv-mesendzhera.html
   * https://dev.ua/news/telegram-1715166769
-5. Spain language:
+5. Spanish language:
   * https://www.adslzone.net/noticias/seguridad/telegram-acceso-ubicacion-posicion/
 
 Video example:
