@@ -110,10 +110,15 @@ Media mentions:
   * https://t.me/exploitex/14680
   * https://t.me/CyberStrikeNews/530
   * https://hi-tech.mail.ru/news/109683-srochno-otklyuchite-etu-funkciyu-v-telegram-inache-vas-najdut/
+  * https://the-geek.ru/news/razrabotan-instrument-dlja-slezhki-za-polzovateljami-telegram?ysclid=lvxwoeu1te198960
+  * https://skynetzone.org/threads/cctv-novyj-instrument-dlja-slezhki-v-telegram.32700/
+  * https://www.iguides.ru/main/security/utilita_vychislyayushchaya_tochnoe_mestopolozhenie_polzovateley_telegram/
 3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 4. Ukranian langiage:
   * https://kreschatic.kiev.ua/tehno/2024/05/08/telegram-teper-zmozhe-otrymuvaty-dani-pro-misczeznahodzhennya-korystuvachiv-mesendzhera.html
+5. Spain language:
+  * https://www.adslzone.net/noticias/seguridad/telegram-acceso-ubicacion-posicion/
 
 Video example:
 --------------
