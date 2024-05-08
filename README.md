@@ -117,7 +117,7 @@ Media mentions:
 
 [RU] https://vk.com/wall-225594201_181?ysclid=lvxhixzl7o951682138
 
-![RU](https://www.securitylab.ru/news/548052.php)
+[RU] https://www.securitylab.ru/news/548052.php
 
 
 Video example:
