@@ -119,6 +119,8 @@ Media mentions:
 
 [RU] https://www.securitylab.ru/news/548052.php
 
+[IT] https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
+
 
 Video example:
 --------------
