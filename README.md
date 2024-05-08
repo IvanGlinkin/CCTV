@@ -109,6 +109,7 @@ Media mentions:
   * https://meduza.io/news/2024/05/08/vypusknik-universiteta-minoborony-rf-sozdal-instrument-pokazyvayuschiy-primernoe-mestopolozhenie-polzovateley-telegram
   * https://t.me/exploitex/14680
   * https://t.me/CyberStrikeNews/530
+  * https://hi-tech.mail.ru/news/109683-srochno-otklyuchite-etu-funkciyu-v-telegram-inache-vas-najdut/
 3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 
