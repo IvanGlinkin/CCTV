@@ -100,6 +100,7 @@ Media mentions: (so many, just google it ["close-circuit telegram vision"](https
   * https://twitter.com/hack_git/status/1786271191847539117
   * https://www.youtube.com/watch?v=AV6E-bUYVSs
   * https://knowpy.com/be-careful-if-telegram-has-access-to-your-location-this-portal-reveals-your-position
+  * https://www.gearrice.com/update/be-careful-with-this-telegram-function-a-tool-manages-to-track-our-location-if-we-have-it-activated/
 2. Russian language:
   * https://dzen.ru/b/ZjMjQrQIlkH8ypnH
   * https://tgstat.ru/channel/@infosec_globe/2642
@@ -123,6 +124,7 @@ Media mentions: (so many, just google it ["close-circuit telegram vision"](https
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 4. Spanish language:
   * https://www.adslzone.net/noticias/seguridad/telegram-acceso-ubicacion-posicion/
+  * https://www.xatakamovil.com/seguridad/cuidado-esta-funcion-telegram-herramienta-consigue-rastrear-nuestra-ubicacion-llevamos-activada
 
 Video example:
 --------------
