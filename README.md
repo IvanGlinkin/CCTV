@@ -116,6 +116,8 @@ Media mentions:
   * https://www.iguides.ru/main/security/utilita_vychislyayushchaya_tochnoe_mestopolozhenie_polzovateley_telegram/
   * https://www.mentoday.ru/life/news/08-05-2024/hakery-vyshli-na-novyi-uroven-oni-mogut-uznat-vashe-tochnoe-mestopolojenie-s-pomoshchyu-telegram/
   * https://applespbevent.ru/k-funktsii-liudi-riadom-v-telegram-iest-bolshiie-voprosy-v-planie-konfidientsialnosti-polzovatieliei/
+  * https://xakep.ru/2024/05/08/close-circuit-telegram-vision/
+  * https://habr.com/ru/news/813209/
 3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
 4. Spanish language:
