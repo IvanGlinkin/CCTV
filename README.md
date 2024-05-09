@@ -87,7 +87,7 @@ optional arguments:
                         Telegram API hash
 ```
 
-Media mentions: (so many, just google it "close-circuit telegram vision")
+Media mentions: (so many, just google it !["close-circuit telegram vision"](https://www.google.com/search?q=%22close-circuit+telegram+vision%22))
 ---------------
 1. English language:
   * https://www.linkedin.com/feed/update/urn:li:activity:7191073927949938688/
