@@ -21,15 +21,15 @@
     <script src="../leaflet/leaflet.js"></script>
     <script src="../leaflet/js/leaflet.markercluster.js"></script>
     <script>
-        var map = L.map('map').setView(["51.51",  "-0.15"], 15); // Set initial map view
+        const map = L.map('map').setView(["51.51", "-0.15"], 15); // Set initial map view
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         // Calculate the center of the map-container div
-        var mapContainer = document.getElementById('map-container');
-        var centerLatLng = map.containerPointToLatLng([mapContainer.offsetWidth / 2, mapContainer.offsetHeight / 2]);
+        const mapContainer = document.getElementById('map-container');
+        let centerLatLng = map.containerPointToLatLng([mapContainer.offsetWidth / 2, mapContainer.offsetHeight / 2]);
 
         // Array to store markers
-        var markers = [];
+        const markers = [];
 
         // Function to reposition the marker when the map is moved
         function updateMarker() {
@@ -41,19 +41,19 @@
 
         // Function to update coordinates in the sidebar
         function updateCoordinates(e) {
-            var coordinatesElement = document.getElementById('coordinates');
+            const coordinatesElement = document.getElementById('coordinates');
             coordinatesElement.innerHTML = "Coordinates<br>&nbsp; Latitude: " + e.latlng.lat.toFixed(5) + "<br>&nbsp; Longitude: " + e.latlng.lng.toFixed(5);
         }
 
         // Add marker to the center of the map-container div
-        var marker = L.marker(centerLatLng).addTo(map);
+        const marker = L.marker(centerLatLng).addTo(map);
 
         // Update marker position when map is moved
         map.on('move', updateMarker);
 
         // Function to handle slider input change
         function updateDistance(value) {
-            var distanceLabel = document.getElementById('distance-label');
+            const distanceLabel = document.getElementById('distance-label');
             distanceLabel.textContent = "Radius: " + value + " meters";
             // Update circle radius
             map.eachLayer(function(layer) {
@@ -66,22 +66,24 @@
         // Function to add a new marker to the map
         function addMarker() {
             // Add marker at the center of the map
-            var newMarker = L.marker(map.getCenter()).addTo(map);
+            const newMarker = L.marker(map.getCenter()).addTo(map);
             markers.push(newMarker);
-            
+
             // Draw line between markers
             if (markers.length > 1) {
-                var prevMarker = markers[markers.length - 2];
-                var distance = prevMarker.getLatLng().distanceTo(newMarker.getLatLng());
-                var line = L.polyline([prevMarker.getLatLng(), newMarker.getLatLng()], { color: 'red' }).addTo(map);
-                L.tooltip({ permanent: true, direction: 'right', className: 'marker-tooltip' })
+                const prevMarker = markers[markers.length - 2];
+                const distance = prevMarker.getLatLng().distanceTo(newMarker.getLatLng());
+                const line = L.polyline([prevMarker.getLatLng(), newMarker.getLatLng()], { color: 'red' }).addTo(map);
+                const tooltip = L.tooltip({ permanent: true, direction: 'right', className: 'marker-tooltip' })
                     .setContent(distance.toFixed(2) + " meters")
-                    .setLatLng(prevMarker.getLatLng())
                     .addTo(map);
+                // Position tooltip at the middle of the line
+                const middleLatLng = L.latLngBounds([prevMarker.getLatLng(), newMarker.getLatLng()]).getCenter();
+                tooltip.setLatLng(middleLatLng);
             }
 
             // Add circle to show radius
-            var circle = L.circle(map.getCenter(), {
+            const circle = L.circle(map.getCenter(), {
                 color: 'blue',
                 fillColor: 'blue',
                 fillOpacity: 0.3,
@@ -91,6 +93,18 @@
             updateCoordinates({ latlng: map.getCenter() });
         }
 
+        // Function to clear all markers and lines from the map
+        function clearMarkers() {
+            markers.forEach(function(marker) {
+                map.removeLayer(marker);
+            });
+            markers.length = 0; // Clear markers array
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Polyline || layer instanceof L.Tooltip || layer instanceof L.Circle) {
+                    map.removeLayer(layer);
+                }
+            });
+        }
     </script>
 </body>
 </html>
