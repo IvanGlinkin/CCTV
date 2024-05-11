@@ -1,5 +1,6 @@
 # CCTV
-Close-Circuit Telegram Vision revolutionizes location tracking with its open-source design and Telegram API integration. Offering precise tracking within 50-100 meters, users can monitor others in real-time for logistics or safety, redefining how we navigate our surroundings
+Close-Circuit Telegram Vision revolutionizes location tracking with its open-source design and Telegram API integration. Offering precise tracking within 50-100 meters, users can monitor others in real-time for logistics or safety, redefining how we navigate our surroundings.
+PLEASE BE AWARED TELEGRAM STARTED BANNING ACCOUNTS FOR USING "FIND PEOPLE NEARBY" FEATURE
 
 Usage example:
 --------------
@@ -87,7 +88,7 @@ optional arguments:
                         Telegram API hash
 ```
 
-Media mentions:
+Media mentions: (so many, just google it ["close-circuit telegram vision"](https://www.google.com/search?q=%22close-circuit+telegram+vision%22))
 ---------------
 1. English language:
   * https://www.linkedin.com/feed/update/urn:li:activity:7191073927949938688/
@@ -99,6 +100,7 @@ Media mentions:
   * https://twitter.com/hack_git/status/1786271191847539117
   * https://www.youtube.com/watch?v=AV6E-bUYVSs
   * https://knowpy.com/be-careful-if-telegram-has-access-to-your-location-this-portal-reveals-your-position
+  * https://www.gearrice.com/update/be-careful-with-this-telegram-function-a-tool-manages-to-track-our-location-if-we-have-it-activated/
 2. Russian language:
   * https://dzen.ru/b/ZjMjQrQIlkH8ypnH
   * https://tgstat.ru/channel/@infosec_globe/2642
@@ -116,13 +118,13 @@ Media mentions:
   * https://www.iguides.ru/main/security/utilita_vychislyayushchaya_tochnoe_mestopolozhenie_polzovateley_telegram/
   * https://www.mentoday.ru/life/news/08-05-2024/hakery-vyshli-na-novyi-uroven-oni-mogut-uznat-vashe-tochnoe-mestopolojenie-s-pomoshchyu-telegram/
   * https://applespbevent.ru/k-funktsii-liudi-riadom-v-telegram-iest-bolshiie-voprosy-v-planie-konfidientsialnosti-polzovatieliei/
+  * https://xakep.ru/2024/05/08/close-circuit-telegram-vision/
+  * https://habr.com/ru/news/813209/
 3. Italian language:
   * https://www.redhotcyber.com/post/sorveglianza-o-funzionalita-di-telegram-cctv-e-il-nuovo-strumento-che-rintraccia-gli-utenti-in-tempo-reale/
-4. Ukranian langiage:
-  * https://kreschatic.kiev.ua/tehno/2024/05/08/telegram-teper-zmozhe-otrymuvaty-dani-pro-misczeznahodzhennya-korystuvachiv-mesendzhera.html
-  * https://dev.ua/news/telegram-1715166769
-5. Spanish language:
+4. Spanish language:
   * https://www.adslzone.net/noticias/seguridad/telegram-acceso-ubicacion-posicion/
+  * https://www.xatakamovil.com/seguridad/cuidado-esta-funcion-telegram-herramienta-consigue-rastrear-nuestra-ubicacion-llevamos-activada
 
 Video example:
 --------------
