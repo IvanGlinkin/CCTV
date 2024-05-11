@@ -29,8 +29,10 @@ def generate_html_from_json(json_file, output_file):
     points_js = "var points = [\n"
     for user_id, user_data in data.items():
         username = user_data['username'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['username'] else ""
-        first_name = user_data['first_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['first_name'] else ""
-        last_name = user_data['last_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['last_name'] else ""
+        first_name = user_data['first_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data[
+            'first_name'] else ""
+        last_name = user_data['last_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data[
+            'last_name'] else ""
         phone = user_data['phone'] or ""
         coordinates = user_data['coordinates_average']
         latitude = coordinates['latitude']

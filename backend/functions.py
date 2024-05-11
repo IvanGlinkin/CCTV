@@ -18,12 +18,14 @@ def generate_pattern(length):
     pattern.append((length - 3) // 2 - 1)
     return pattern
 
+
 def calculate_length(metres):
     remainder = ((metres + 400) % 800)
     if remainder == 0:
         return metres
     else:
         return (metres - remainder + 800)
+
 
 # Function to calculate coordinates based on steps and direction
 def calculate_coordinates(lat, lon, direction, distance):
@@ -52,6 +54,7 @@ def calculate_coordinates(lat, lon, direction, distance):
         raise ValueError("Invalid direction")
     return new_lat, new_lon
 
+
 # Function to combine all json files into one
 def combine_json_files(folder_path, output_file):
     combined_data = {}
@@ -65,12 +68,13 @@ def combine_json_files(folder_path, output_file):
     with open(output_file, 'w') as output:
         dump(combined_data, output, indent=4)
 
+
 # Get the city based on coordinates
 def get_location_details(latitude, longitude):
     url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=json"
     headers = {
-    'User-Agent': 'CCTV Bot'
-	}
+        'User-Agent': 'CCTV Bot'
+    }
     response = get(url, headers=headers)
     data = response.json()
     if 'address' in data:
@@ -81,13 +85,15 @@ def get_location_details(latitude, longitude):
     else:
         return None, None, None
 
+
 def countdown_timer(duration):
     for remaining in range(duration, 0, -1):
         print(f"\t\t[ > ] Sleeping for {remaining} seconds before processing the next coordinates...", end="\r")
         sleep(1)
     print(" " * 100, end="\r")  # Clear the line after countdown
 
-#Download avatars
+
+# Download avatars
 def download_avatar(user_id, username, user_url, output_folder):
     avatar_filename = path.join(output_folder, f"{user_id}-{username}.jpg")
     if username is None:
@@ -110,13 +116,15 @@ def download_avatar(user_id, username, user_url, output_folder):
                         image_file.write(response.content)
                     print(f"Downloaded avatar for user {user_id}-{username} successfully")
                 else:
-                    print(f"Failed to download avatar for user {user_id}-{username}. Status code: {response.status_code}")
+                    print(
+                        f"Failed to download avatar for user {user_id}-{username}. Status code: {response.status_code}")
             else:
                 print(f"No profile photo found for user {user_id}-{username}")
         else:
             print(f"Failed to fetch user page for user {user_id}-{username}. Status code: {response.status_code}")
     except Exception as e:
         print(f"Error downloading avatar for user {user_id}-{username}: {e}")
+
 
 def download_avatars(json_file, output_folder):
     print(f"Starting avatars download based on {json_file}...")
@@ -132,6 +140,7 @@ def download_avatars(json_file, output_folder):
             user_url = f"https://t.me/{username}"
             executor.submit(download_avatar, user_id, username, user_url, output_folder)
 
+
 def create_config(file_path):
     """Create a custom YAML configuration file by asking the user for input."""
 
@@ -143,12 +152,15 @@ def create_config(file_path):
         },
         'location': {
             'lat': {'prompt': 'Starting latitude [51.51404]: ', 'default': 51.51404, 'mandatory': False, 'type': float},
-            'lon': {'prompt': 'Starting longitude [-0.15063]: ', 'default': -0.15063, 'mandatory': False, 'type': float},
+            'lon': {'prompt': 'Starting longitude [-0.15063]: ', 'default': -0.15063, 'mandatory': False,
+                    'type': float},
             'meters': {'prompt': 'Search radius(meters) [1200]: ', 'default': 1200, 'mandatory': False, 'type': int},
         },
         'misc': {
-            'timesleep': {'prompt': 'Waiting time between locations(sec) [30]: ', 'default': 30, 'mandatory': False, 'type': int},
-            'speed_kmh': {'prompt': 'Moving speed between locations(km/h) [50]: ', 'default': 50, 'mandatory': False, 'type': int},
+            'timesleep': {'prompt': 'Waiting time between locations(sec) [30]: ', 'default': 30, 'mandatory': False,
+                          'type': int},
+            'speed_kmh': {'prompt': 'Moving speed between locations(km/h) [50]: ', 'default': 50, 'mandatory': False,
+                          'type': int},
         }
     }
 
@@ -158,7 +170,7 @@ def create_config(file_path):
     print("\nCheck README.md and prepare required values at https://my.telegram.org/auth")
     # Iterate over the settings dictionary to prompt user for each value
     for group, group_settings in settings.items():
-         for setting, details in group_settings.items():
+        for setting, details in group_settings.items():
             while True:  # Loop until valid input is given or the program exits
                 user_input = input(details['prompt'])
                 if details['mandatory'] and not user_input.strip():  # Check if the input is mandatory and empty
@@ -179,6 +191,7 @@ def create_config(file_path):
     with open(file_path, 'w') as file:
         yaml.safe_dump(config_data, file)
     print(f"Config file created at {file_path}")
+
 
 def load_config(file_path):
     """Load the YAML configuration file, creating it if it does not exist."""
