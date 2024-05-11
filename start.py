@@ -12,7 +12,7 @@ from telethon.sync import TelegramClient
 from backend.banners import (
     banner,
     finishing_application,
-    pring_city_by_geo,
+    print_city_by_geo,
     print_combined_data,
     print_current_step,
     print_files_stored,
@@ -108,7 +108,7 @@ print(banner)
 print_geo_coordinater(latitude, longitude)
 
 # Printing city and country by coordinates
-pring_city_by_geo(latitude, longitude)
+print_city_by_geo(latitude, longitude)
 
 # Perform steps according to the pattern
 for i, steps in enumerate(pattern):
@@ -249,6 +249,7 @@ html_file_combined = path.join(current_directory, 'reports-html', '_combined_dat
 for html_file in [path.realpath(html_file_current), path.realpath(html_file_combined)]:
     try:
         webbrowser.open('file://' + html_file)
+        print(f"File {html_file} saved successfully!")
     except (ValueError, FileNotFoundError):
         print(f"File {html_file} not found!")
 

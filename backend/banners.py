@@ -1,5 +1,6 @@
 from .functions import get_location_details
 
+
 # Banner
 banner = """
  ██████╗██╗      ██████╗ ███████╗███████╗     ██████╗██╗██████╗  ██████╗██╗   ██╗██╗████████╗                      
@@ -29,7 +30,7 @@ def print_geo_coordinater(lat, lon):
     print("\t[ * * ] Longitude:", lon)
 
 
-def pring_city_by_geo(lat, lon):
+def print_city_by_geo(lat, lon):
     town, city, country = get_location_details(lat, lon)
     print(f"\t[ * * ] Country:   {country}\n\t[ * * ] City:\t   {city}\n\t[ * * ] Town:\t   {town}\n")
 

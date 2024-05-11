@@ -24,31 +24,31 @@ def calculate_length(metres):
     if remainder == 0:
         return metres
     else:
-        return (metres - remainder + 800)
+        return metres - remainder + 800
 
 
 # Function to calculate coordinates based on steps and direction
 def calculate_coordinates(lat, lon, direction, distance):
     # Radius of the Earth in kilometers
-    R = 6378.1  # Earth radius in km
+    r = 6378.1  # Earth radius in km
     # Convert latitude and longitude from degrees to radians
     lat_rad = radians(lat)
-    lon_rad = radians(lon)
+
     # Calculate new latitude and longitude based on direction and distance
     if direction == 'starting':
         new_lon = lon
         new_lat = lat
     elif direction == 'west':
-        new_lon = lon - (distance / (R * cos(lat_rad))) * (180 / pi)
+        new_lon = lon - (distance / (r * cos(lat_rad))) * (180 / pi)
         new_lat = lat
     elif direction == 'south':
-        new_lat = lat - (distance / R) * (180 / pi)
+        new_lat = lat - (distance / r) * (180 / pi)
         new_lon = lon
     elif direction == 'east':
-        new_lon = lon + (distance / (R * cos(lat_rad))) * (180 / pi)
+        new_lon = lon + (distance / (r * cos(lat_rad))) * (180 / pi)
         new_lat = lat
     elif direction == 'north':
-        new_lat = lat + (distance / R) * (180 / pi)
+        new_lat = lat + (distance / r) * (180 / pi)
         new_lon = lon
     else:
         raise ValueError("Invalid direction")
@@ -71,19 +71,19 @@ def combine_json_files(folder_path, output_file):
 
 # Get the city based on coordinates
 def get_location_details(latitude, longitude):
-    url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=json"
-    headers = {
-        'User-Agent': 'CCTV Bot'
-    }
-    response = get(url, headers=headers)
-    data = response.json()
-    if 'address' in data:
-        town = data['address'].get('town', '')
-        city = data['address'].get('city', '')
-        country = data['address'].get('country', '')
-        return town, city, country
-    else:
-        return None, None, None
+    url = f"https://nominatim.openstreetmap.org/reverse"
+    headers = {'User-Agent': 'CCTV Bot'}
+    response = get(url, headers=headers, params={"lat": latitude, "lon": longitude, "format": "json"})
+
+    if response.status_code == 200 and "application/json" in response.headers.get("Content-Type"):
+        data: dict = response.json()
+        if 'address' in data:
+            town = data['address'].get('town', '')
+            city = data['address'].get('city', '')
+            country = data['address'].get('country', '')
+            return town, city, country
+
+    return "", "", ""
 
 
 def countdown_timer(duration):
