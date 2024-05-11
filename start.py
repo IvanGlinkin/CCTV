@@ -97,9 +97,9 @@ report_json_directory = "./reports-json/"
 report_html_directory = "./reports-html/"
 
 # Check if the needed directories exist, create it if not
-for dir in avatar_directory, report_json_directory, report_html_directory:
-    if not path.exists(dir):
-        makedirs(dir)
+for directory in avatar_directory, report_json_directory, report_html_directory:
+    if not path.exists(directory):
+        makedirs(directory)
 
 # Banner logo
 print(banner)
@@ -140,8 +140,11 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
     time_adjusted = round(0.6 * 3600 / speed_kmh)  # seconds to cover distance 600 meters
     if timesleep < time_adjusted:
         print(
-            f"[ ! ] Configured timesleep {timesleep}s is too low to cover all points with configured speed {speed_kmh} km/h")
-        print(f"[ ! ] Adjusting sleep time to {time_adjusted}s according to calculated distances")
+            f"""
+[ ! ] Configured timesleep {timesleep}s is too low to cover all points with configured speed {speed_kmh} km/h
+[ ! ] Adjusting sleep time to {time_adjusted}s according to calculated distances
+            """
+        )
         timesleep = time_adjusted
 
     # Initialize the dictionary to store user data
@@ -177,40 +180,43 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
                 for peer_located in update.peers:
-                    if isinstance(peer_located, types.PeerLocated):  # Check if the peer_located is of type PeerLocated
-                        if peer_located.distance == 500:
-                            if isinstance(peer_located.peer, types.PeerUser):  # Check if the peer is a PeerUser
-                                user_id = peer_located.peer.user_id
-                                user_info = next((user for user in result.users if user.id == user_id), None)
-                                if user_info:
-                                    # Get current timestamp
-                                    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    if all([
+                        isinstance(peer_located, types.PeerLocated),  # Check if the peer_located is of type PeerLocated
+                        peer_located.distance == 500,
+                        isinstance(peer_located.peer, types.PeerUser)  # Check if the peer is a PeerUser
+                    ]):
+                        user_id = peer_located.peer.user_id
+                        user_info = next((user for user in result.users if user.id == user_id), None)
+                        if user_info:
+                            # Get current timestamp
+                            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                                    if user_id not in users_data:
-                                        # If the user is not in the dictionary, add them with initial data
-                                        username = user_info.username
+                            if user_id not in users_data:
+                                # If the user is not in the dictionary, add them with initial data
+                                username = user_info.username
 
-                                        users_data[user_id] = {
-                                            "first_name": user_info.first_name,
-                                            "last_name": user_info.last_name,
-                                            "username": user_info.username,
-                                            "phone": user_info.phone,
-                                            "photo_id": user_info.photo.photo_id if user_info.photo else None,
-                                            "coordinates": [],
-                                            "coordinates_average": {"latitude": 0, "longitude": 0, "timestamp": 0}
-                                        }
-                                    # Append new coordinates
-                                    users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
+                                users_data[user_id] = {
+                                    "first_name": user_info.first_name,
+                                    "last_name": user_info.last_name,
+                                    "username": user_info.username,
+                                    "phone": user_info.phone,
+                                    "photo_id": user_info.photo.photo_id if user_info.photo else None,
+                                    "coordinates": [],
+                                    "coordinates_average": {"latitude": 0.0, "longitude": 0.0}
+                                }
 
-                                    # Calculate average coordinates
-                                    avg_latitude = sum(coord[0] for coord in users_data[user_id]["coordinates"]) / len(
-                                        users_data[user_id]["coordinates"])
-                                    avg_longitude = sum(coord[1] for coord in users_data[user_id]["coordinates"]) / len(
-                                        users_data[user_id]["coordinates"])
+                            # Append new coordinates
+                            users_data[user_id]["coordinates"].append((latitude, longitude, timestamp))
 
-                                    # Update the average coordinates
-                                    users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude,
-                                                                                  "longitude": avg_longitude}
+                            # Calculate average coordinates
+                            avg_latitude = sum(coord[0] for coord in users_data[user_id]["coordinates"]) / len(
+                                users_data[user_id]["coordinates"])
+                            avg_longitude = sum(coord[1] for coord in users_data[user_id]["coordinates"]) / len(
+                                users_data[user_id]["coordinates"])
+
+                            # Update the average coordinates
+                            users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude,
+                                                                          "longitude": avg_longitude}
 
         # Write the updated data to the file
         print_update_local_json()
@@ -240,11 +246,11 @@ current_directory = getcwd()
 html_file_current = path.join(current_directory, report_html_directory + filename + ".html")
 html_file_combined = path.join(current_directory, 'reports-html', '_combined_data.html')
 
-try:
-    webbrowser.open('file://' + path.realpath(html_file_current))
-    webbrowser.open('file://' + path.realpath(html_file_combined))
-except:
-    print("HTML file not found!")
+for html_file in [path.realpath(html_file_current), path.realpath(html_file_combined)]:
+    try:
+        webbrowser.open('file://' + html_file)
+    except (ValueError, FileNotFoundError):
+        print(f"File {html_file} not found!")
 
 # Finishing the application
 finishing_application()
