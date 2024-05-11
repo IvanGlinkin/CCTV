@@ -56,14 +56,15 @@ args = parser.parse_args()
 config_file="config.yaml"
 config = load_config(config_file)
 # Update settings if provided in command-line arguments
-latitude = args.latitude if args.latitude else config['location']['lat']
-longitude = args.longitude if args.longitude else config['location']['lon']
-meters = args.meters if args.meters else config['location']['meters']
-timesleep = args.timesleep if args.timesleep else config['misc']['timesleep']
-speed_kmh = args.speed_kmh if args.speed_kmh else config['misc']['speed_kmh']
-telegram_name = args.telegram_name if args.telegram_name else "cctv"
-telegram_api_id = args.telegram_api_id if args.telegram_api_id else config['api_config']['api_id']
-telegram_api_hash = args.telegram_api_hash if args.telegram_api_hash else config['api_config']['api_hash']
+latitude = args.latitude or config['location']['lat']
+longitude = args.longitude or config['location']['lon']
+meters = args.meters or config['location']['meters']
+timesleep = args.timesleep or config['misc']['timesleep']
+speed_kmh = args.speed_kmh or config['misc']['speed_kmh']
+telegram_name = args.telegram_name or "cctv"
+telegram_api_id = args.telegram_api_id or config['api_config']['api_id']
+telegram_api_hash = args.telegram_api_hash or config['api_config']['api_hash']
+
 phone_number = config['api_config']['phone']
 
 
