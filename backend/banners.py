@@ -1,6 +1,5 @@
 from .functions import get_location_details
 
-
 # Banner
 banner = """
  ██████╗██╗      ██████╗ ███████╗███████╗     ██████╗██╗██████╗  ██████╗██╗   ██╗██╗████████╗                      

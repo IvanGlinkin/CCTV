@@ -36,19 +36,19 @@ from backend.functions import (
 from backend.json_into_html import generate_html_from_json
 
 # Create an ArgumentParser object
-parser = argparse.ArgumentParser(description='Custom settings for script launch')
+parser = argparse.ArgumentParser(description="Custom settings for script launch")
 
 # Add arguments for latitude, longitude, meters, and timesleep
-parser.add_argument('-lat', '--latitude', type=float, help='Latitude setting')
-parser.add_argument('-long', '--longitude', type=float, help='Longitude setting')
-parser.add_argument('-m', '--meters', type=int, help='Meters setting')
-parser.add_argument('-t', '--timesleep', type=int, help='Timesleep setting')
-parser.add_argument('-s', '--speed_kmh', type=int, help='Speed setting')
+parser.add_argument("-lat", "--latitude", type=float, help="Latitude setting")
+parser.add_argument("-long", "--longitude", type=float, help="Longitude setting")
+parser.add_argument("-m", "--meters", type=int, help="Meters setting")
+parser.add_argument("-t", "--timesleep", type=int, help="Timesleep setting")
+parser.add_argument("-s", "--speed_kmh", type=int, help="Speed setting")
 
 # Add arguments for Telegram credentials
-parser.add_argument('-tn', '--telegram_name', type=str, help='Telegram session name')
-parser.add_argument('-ti', '--telegram_api_id', type=int, help='Telegram API ID')
-parser.add_argument('-th', '--telegram_api_hash', type=str, help='Telegram API hash')
+parser.add_argument("-tn", "--telegram_name", type=str, help="Telegram session name")
+parser.add_argument("-ti", "--telegram_api_id", type=int, help="Telegram API ID")
+parser.add_argument("-th", "--telegram_api_hash", type=str, help="Telegram API hash")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -58,20 +58,20 @@ config_file = "config.yaml"
 config = load_config(config_file)
 
 # Update settings if provided in command-line arguments
-latitude = args.latitude or config['location']['lat']
-longitude = args.longitude or config['location']['lon']
-meters = args.meters or config['location']['meters']
-timesleep = args.timesleep or config['misc']['timesleep']
-speed_kmh = args.speed_kmh or config['misc']['speed_kmh']
+latitude = args.latitude or config["location"]["lat"]
+longitude = args.longitude or config["location"]["lon"]
+meters = args.meters or config["location"]["meters"]
+timesleep = args.timesleep or config["misc"]["timesleep"]
+speed_kmh = args.speed_kmh or config["misc"]["speed_kmh"]
 telegram_name = args.telegram_name or "cctv"
-telegram_api_id = args.telegram_api_id or config['api_config']['api_id']
-telegram_api_hash = args.telegram_api_hash or config['api_config']['api_hash']
+telegram_api_id = args.telegram_api_id or config["api_config"]["api_id"]
+telegram_api_hash = args.telegram_api_hash or config["api_config"]["api_hash"]
 
-phone_number = config['api_config']['phone']
+phone_number = config["api_config"]["phone"]
 
 # General variables
 pattern = generate_pattern((calculate_length(meters + 400) + 800) // 200)  # Adjust the length as needed (x / 2 - 2)
-current_datetime = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # Store the initial coordinates and initialize lists to store the coordinates for each step
 initial_latitude = latitude
@@ -89,7 +89,7 @@ filtered_users = []
 # Initialize an empty dictionary to store user data
 users_data = {}
 step = 0
-filename = f'{latitude}-{longitude}-{current_datetime}'
+filename = f"{latitude}-{longitude}-{current_datetime}"
 
 # Directories
 avatar_directory = "./avatars/"
@@ -113,15 +113,15 @@ print_city_by_geo(latitude, longitude)
 # Perform steps according to the pattern
 for i, steps in enumerate(pattern):
     if i == 0:
-        direction = 'starting'
+        direction = "starting"
     elif i % 4 == 1:
-        direction = 'west'
+        direction = "west"
     elif i % 4 == 2:
-        direction = 'south'
+        direction = "south"
     elif i % 4 == 3:
-        direction = 'east'
+        direction = "east"
     else:
-        direction = 'north'
+        direction = "north"
     for _ in range(steps):
         latitude, longitude = calculate_coordinates(latitude, longitude, direction, 0.6)  # 600 meters in kilometers
         step_coordinates.append((latitude, longitude))
@@ -154,13 +154,11 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
     print_start_harvesting()
     for latitude, longitude in step_coordinates:
         try:
-            result = client(functions.contacts.GetLocatedRequest(
-                geo_point=types.InputGeoPoint(
-                    lat=latitude,
-                    long=longitude,
-                    accuracy_radius=500
+            result = client(
+                functions.contacts.GetLocatedRequest(
+                    geo_point=types.InputGeoPoint(lat=latitude, long=longitude, accuracy_radius=500)
                 )
-            ))
+            )
         except FloodWaitError as e:
             print(f"[ ! ] FloodWaitError: {e}")
 
@@ -180,11 +178,15 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
         for update in result.updates:
             if isinstance(update, types.UpdatePeerLocated):
                 for peer_located in update.peers:
-                    if all([
-                        isinstance(peer_located, types.PeerLocated),  # Check if the peer_located is of type PeerLocated
-                        peer_located.distance == 500,
-                        isinstance(peer_located.peer, types.PeerUser)  # Check if the peer is a PeerUser
-                    ]):
+                    if all(
+                        [
+                            isinstance(
+                                peer_located, types.PeerLocated
+                            ),  # Check if the peer_located is of type PeerLocated
+                            peer_located.distance == 500,
+                            isinstance(peer_located.peer, types.PeerUser),  # Check if the peer is a PeerUser
+                        ]
+                    ):
                         user_id = peer_located.peer.user_id
                         user_info = next((user for user in result.users if user.id == user_id), None)
                         if user_info:
@@ -202,7 +204,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
                                     "phone": user_info.phone,
                                     "photo_id": user_info.photo.photo_id if user_info.photo else None,
                                     "coordinates": [],
-                                    "coordinates_average": {"latitude": 0.0, "longitude": 0.0}
+                                    "coordinates_average": {"latitude": 0.0, "longitude": 0.0},
                                 }
 
                             # Append new coordinates
@@ -210,17 +212,21 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
 
                             # Calculate average coordinates
                             avg_latitude = sum(coord[0] for coord in users_data[user_id]["coordinates"]) / len(
-                                users_data[user_id]["coordinates"])
+                                users_data[user_id]["coordinates"]
+                            )
                             avg_longitude = sum(coord[1] for coord in users_data[user_id]["coordinates"]) / len(
-                                users_data[user_id]["coordinates"])
+                                users_data[user_id]["coordinates"]
+                            )
 
                             # Update the average coordinates
-                            users_data[user_id]["coordinates_average"] = {"latitude": avg_latitude,
-                                                                          "longitude": avg_longitude}
+                            users_data[user_id]["coordinates_average"] = {
+                                "latitude": avg_latitude,
+                                "longitude": avg_longitude,
+                            }
 
         # Write the updated data to the file
         print_update_local_json()
-        with open(f"{report_json_directory}{filename}.json", 'w', encoding='utf-8') as file:
+        with open(f"{report_json_directory}{filename}.json", "w", encoding="utf-8") as file:
             dump(users_data, file, indent=4)
         print_successfully()
 
@@ -244,11 +250,11 @@ combine_data(report_json_directory, report_html_directory)
 
 current_directory = getcwd()
 html_file_current = path.join(current_directory, report_html_directory + filename + ".html")
-html_file_combined = path.join(current_directory, 'reports-html', '_combined_data.html')
+html_file_combined = path.join(current_directory, "reports-html", "_combined_data.html")
 
 for html_file in [path.realpath(html_file_current), path.realpath(html_file_combined)]:
     try:
-        webbrowser.open('file://' + html_file)
+        webbrowser.open("file://" + html_file)
     except (ValueError, FileNotFoundError):
         print(f"File {html_file} not found!")
 
