@@ -249,7 +249,6 @@ html_file_combined = path.join(current_directory, 'reports-html', '_combined_dat
 for html_file in [path.realpath(html_file_current), path.realpath(html_file_combined)]:
     try:
         webbrowser.open('file://' + html_file)
-        print(f"File {html_file} saved successfully!")
     except (ValueError, FileNotFoundError):
         print(f"File {html_file} not found!")
 
