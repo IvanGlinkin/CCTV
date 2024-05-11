@@ -1,0 +1,5 @@
+beautifulsoup4==4.12.3
+PyYAML==6.0.1
+Requests==2.31.0
+telethon==1.35.0
+ruff==0.4.4
