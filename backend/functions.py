@@ -61,7 +61,7 @@ def combine_json_files(folder_path, output_file):
     for filename in listdir(folder_path):
         file_path = path.join(folder_path, filename)
         if filename.endswith(".json") and filename != output_file:
-            with open(file_path, "r") as file:
+            with open(file_path) as file:
                 data = load(file)
                 combined_data.update(data)  # Merge dictionaries
 
@@ -129,7 +129,7 @@ def download_avatar(user_id, username, user_url, output_folder):
 
 def download_avatars(json_file, output_folder):
     print(f"Starting avatars download based on {json_file}...")
-    with open(json_file, "r") as f:
+    with open(json_file) as f:
         data = load(f)
 
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -212,5 +212,5 @@ def load_config(file_path):
         print(f"No config file found at {file_path}. Creating initial configuration...")
         create_config(file_path)
 
-    with open(file_path, "r") as file:
+    with open(file_path) as file:
         return yaml.safe_load(file)

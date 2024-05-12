@@ -3,7 +3,7 @@ from os import path
 
 
 def generate_html_from_json(json_file, output_file):
-    with open(json_file, "r") as f:
+    with open(json_file) as f:
         data = load(f)
 
     # Calculate average coordinates

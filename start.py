@@ -230,7 +230,7 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
             dump(users_data, file, indent=4)
         print_successfully()
 
-        if not step == len(step_coordinates):
+        if step != len(step_coordinates):
             countdown_timer(timesleep)
 
 # Download avatars
