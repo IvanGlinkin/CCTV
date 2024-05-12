@@ -39,8 +39,8 @@ target-version = "py312"
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
-select = ["E4", "E7", "E9", "F"]
-ignore = []
+select = ["E", "F", "N", "D", "UP", "PYI", "SLOT", "SIM", "TD", "FIX", "W", "PL"]
+ignore = ["E501", "D1", "D2", "W29", "PLR2004", "SIM108"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
