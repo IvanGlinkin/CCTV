@@ -1,0 +1,19 @@
+name: Ruff
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  issue_comment:
+    types: [created]
+jobs:
+  ruff:
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/run_ci')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: "format --check $(find . -type f -name '*.py')"
