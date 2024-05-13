@@ -49,6 +49,9 @@ parser.add_argument('-tn', '--telegram_name', type=str, help='Telegram session n
 parser.add_argument('-ti', '--telegram_api_id', type=int, help='Telegram API ID')
 parser.add_argument('-th', '--telegram_api_hash', type=str, help='Telegram API hash')
 
+# Add arguments for data processing
+parser.add_argument('--skip-avatars', action='store_true', help='Skip avatars downloading')
+
 # Parse the command-line arguments
 args = parser.parse_args()
 
@@ -64,6 +67,7 @@ speed_kmh = args.speed_kmh or config['misc']['speed_kmh']
 telegram_name = args.telegram_name or "cctv"
 telegram_api_id = args.telegram_api_id or config['api_config']['api_id']
 telegram_api_hash = args.telegram_api_hash or config['api_config']['api_hash']
+skip_avatars = args.skip_avatars
 
 phone_number = config['api_config']['phone']
 
@@ -210,8 +214,9 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
         if not step == len(step_coordinates):
             countdown_timer(timesleep)
 
-#Download avatars
-download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
+# Download avatars
+if not skip_avatars:
+    download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
 
 # Generate the HTML file from JSON
 print_update_html()
