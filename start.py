@@ -64,10 +64,6 @@ meters = args.meters or config["location"]["meters"]
 timesleep = args.timesleep or config["misc"]["timesleep"]
 speed_kmh = args.speed_kmh or config["misc"]["speed_kmh"]
 telegram_name = args.telegram_name or "cctv"
-telegram_api_id = args.telegram_api_id or config["api_config"]["api_id"]
-telegram_api_hash = args.telegram_api_hash or config["api_config"]["api_hash"]
-
-phone_number = config["api_config"]["phone"]
 
 # General variables
 pattern = generate_pattern((calculate_length(meters + 400) + 800) // 200)  # Adjust the length as needed (x / 2 - 2)
@@ -234,7 +230,6 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
             countdown_timer(timesleep)
 
 # Download avatars
-download_avatars(f"{report_json_directory}{filename}.json", avatar_directory)
 
 # Generate the HTML file from JSON
 print_update_html()
