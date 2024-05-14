@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.issue.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.issue.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: chartboost/ruff-action@v1
         with:
