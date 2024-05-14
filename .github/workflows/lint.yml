@@ -1,0 +1,17 @@
+name: CI check
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  ruff:
+    if: >-
+      github.event.issue.pull_request != '' &&
+      contains(github.event.comment.body, '/run_ci') &&
+      contains(vars.ALLOW_CI_TRIGGER, github.event.comment.user.login)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: 'check --config ruff.toml --diff'
