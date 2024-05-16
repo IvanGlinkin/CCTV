@@ -147,19 +147,42 @@ def create_config(file_path):
 
     settings = {
         "api_config": {
-            "phone": {"prompt": "TG phone number: ", "default": None, "mandatory": True},
-            "api_id": {"prompt": "TG api_id: ", "default": None, "mandatory": True, "type": int},
-            "api_hash": {"prompt": "TG api_hash:", "default": None, "mandatory": True},
+            "phone": {
+                "prompt": "TG phone number: ",
+                "default": None,
+                "mandatory": True
+            },
+            "api_id": {
+                "prompt": "TG api_id: ",
+                "default": None,
+                "mandatory": True,
+                "type": int
+            },
+            "api_hash": {
+                "prompt": "TG api_hash:",
+                "default": None,
+                "mandatory": True
+            },
         },
         "location": {
-            "lat": {"prompt": "Starting latitude [51.51404]: ", "default": 51.51404, "mandatory": False, "type": float},
+            "lat": {
+                "prompt": "Starting latitude [51.51404]: ",
+                "default": 51.51404,
+                "mandatory": False,
+                "type": float
+            },
             "lon": {
                 "prompt": "Starting longitude [-0.15063]: ",
                 "default": -0.15063,
                 "mandatory": False,
                 "type": float,
             },
-            "meters": {"prompt": "Search radius(meters) [1200]: ", "default": 1200, "mandatory": False, "type": int},
+            "meters": {
+                "prompt": "Search radius(meters) [1200]: ",
+                "default": 1200,
+                "mandatory": False,
+                "type": int
+            },
         },
         "misc": {
             "timesleep": {

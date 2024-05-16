@@ -183,12 +183,11 @@ with TelegramClient(telegram_name, telegram_api_id, telegram_api_hash, system_ve
             if isinstance(update, types.UpdatePeerLocated):
                 for peer_located in update.peers:
                     if all(
-                        [
-                            isinstance(
-                                peer_located, types.PeerLocated
-                            ),  # Check if the peer_located is of type PeerLocated
+                        [   # Check if the peer_located is of type PeerLocated
+                            isinstance(peer_located, types.PeerLocated),
                             peer_located.distance == 500,
-                            isinstance(peer_located.peer, types.PeerUser),  # Check if the peer is a PeerUser
+                            # Check if the peer is a PeerUser
+                            isinstance(peer_located.peer, types.PeerUser),
                         ]
                     ):
                         user_id = peer_located.peer.user_id
