@@ -1,17 +1,27 @@
 name: CI check
+
 on:
-  issue_comment:
-    types: [created]
+  pull_request_target:
+    branches: [main]
+    paths:
+      - '**.py'
+  workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
 
 jobs:
-  ruff:
-    if: >-
-      github.event.issue.pull_request != '' &&
-      contains(github.event.comment.body, '/run_ci') &&
-      contains(vars.ALLOW_CI_TRIGGER, github.event.comment.user.login)
+  ruff-linter:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - uses: chartboost/ruff-action@v1
         with:
           args: 'check --config ruff.toml --diff'
