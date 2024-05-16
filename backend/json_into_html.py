@@ -3,7 +3,7 @@ from os import path
 
 
 def generate_html_from_json(json_file, output_file):
-    with open(json_file, 'r') as f:
+    with open(json_file) as f:
         data = load(f)
 
     # Calculate average coordinates
@@ -12,8 +12,8 @@ def generate_html_from_json(json_file, output_file):
     num_items = len(data)
     if num_items > 0:
         for user_id, user_data in data.items():
-            total_latitude += user_data['coordinates_average']['latitude']
-            total_longitude += user_data['coordinates_average']['longitude']
+            total_latitude += user_data["coordinates_average"]["latitude"]
+            total_longitude += user_data["coordinates_average"]["longitude"]
 
         average_latitude = total_latitude / num_items
         average_longitude = total_longitude / num_items
@@ -28,13 +28,17 @@ def generate_html_from_json(json_file, output_file):
     # Generate JavaScript code for points
     points_js = "var points = [\n"
     for user_id, user_data in data.items():
-        username = user_data['username'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['username'] else ""
-        first_name = user_data['first_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['first_name'] else ""
-        last_name = user_data['last_name'].replace("'", "&apos;").replace("\\", "&#92;") if user_data['last_name'] else ""
-        phone = user_data['phone'] or ""
-        coordinates = user_data['coordinates_average']
-        latitude = coordinates['latitude']
-        longitude = coordinates['longitude']
+        username = user_data["username"].replace("'", "&apos;").replace("\\", "&#92;") if user_data["username"] else ""
+        first_name = (
+            user_data["first_name"].replace("'", "&apos;").replace("\\", "&#92;") if user_data["first_name"] else ""
+        )
+        last_name = (
+            user_data["last_name"].replace("'", "&apos;").replace("\\", "&#92;") if user_data["last_name"] else ""
+        )
+        phone = user_data["phone"] or ""
+        coordinates = user_data["coordinates_average"]
+        latitude = coordinates["latitude"]
+        longitude = coordinates["longitude"]
         image_url = f"avatars/{user_id}-{user_data['username'] or '.no_avatar'}.jpg"
         if path.exists("./" + image_url):
             image_url = "../" + image_url
@@ -42,7 +46,7 @@ def generate_html_from_json(json_file, output_file):
             image_url = "../avatars/.no_avatar.jpg"
         name = f"{first_name} {last_name}"
         coordinates_text = f"<br> • latitude: {latitude}<br> • longitude: {longitude}"
-        datetime = user_data['coordinates'][0][2] if user_data['coordinates'] else ""
+        datetime = user_data["coordinates"][0][2] if user_data["coordinates"] else ""
         points_js += f"\t{{ coordinates: [{latitude}, {longitude}], imageUrl: '{image_url}', name: '{name}', username: '{username}', phone: '{phone}', coordinates_text: '{coordinates_text}', datetime: '{datetime}' }},\n"
     points_js += "];\n"
 
@@ -170,8 +174,9 @@ def generate_html_from_json(json_file, output_file):
 </html>
 """
     # Write HTML content to output file
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html_content)
+
 
 # Usage example:
 # generate_html_from_json("./reports-json/_combined_data.json", "./reports-html/_combined_data.html")

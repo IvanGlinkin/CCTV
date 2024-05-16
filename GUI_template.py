@@ -2,7 +2,6 @@ import os
 from sys import argv, exit
 from webbrowser import open
 
-from backend.general_settings import latitude, longitude, meters
 from folium import Map, Marker
 from folium.plugins import MousePosition
 from PyQt5.QtCore import Qt
@@ -22,6 +21,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
+from backend.general_settings import latitude, longitude, meters
 
 
 class MainWindow(QMainWindow):
@@ -61,7 +62,7 @@ class MainWindow(QMainWindow):
         upper_splitter.setStretchFactor(0, 1)  # Allow adjusting height of the upper parts
 
         # Create right widget
-        #upper_right_widget = QWidget()
+        # upper_right_widget = QWidget()
         upper_right_widget = SettingsWidget()
 
         # Add right widget to vertical splitter
@@ -76,20 +77,10 @@ class MainWindow(QMainWindow):
         # Load map
         self.load_map()
 
-
-
-
-
-
-
-
-
-
-
-
     def load_map(self):
         from backend.general_settings import latitude as default_latitude
         from backend.general_settings import longitude as default_longitude
+
         m = Map(location=[default_latitude, default_longitude], zoom_start=12)
 
         MousePosition().add_to(m)  # Add mouse position display
@@ -101,23 +92,6 @@ class MainWindow(QMainWindow):
 
         m_html = m.get_root().render()
         self.browser.setHtml(m_html)  # Load the modified Folium map HTML directly into the QWebEngineView
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def new_request(self):
         print("test")
@@ -137,11 +111,11 @@ class MainWindow(QMainWindow):
     def open_global_map(self):
         # Path to your HTML file
         current_directory = os.getcwd()
-        html_file_path = os.path.join(current_directory, 'reports-html', '_combined_data.html')
+        html_file_path = os.path.join(current_directory, "reports-html", "_combined_data.html")
 
         # Check if the HTML file exists
         if os.path.exists(html_file_path):
-            open('file://' + os.path.realpath(html_file_path))
+            open("file://" + os.path.realpath(html_file_path))
         else:
             print("HTML file not found!")
 
@@ -189,24 +163,24 @@ class MainWindow(QMainWindow):
         """)
 
         # Create File menu
-        file_menu = menubar.addMenu('&File')
+        file_menu = menubar.addMenu("&File")
 
         # Create actions for File menu
-        new_request_action = QAction('&New request', self)
-        new_request_action.setShortcut('Ctrl+n')
-        new_request_action.setStatusTip('New request')
+        new_request_action = QAction("&New request", self)
+        new_request_action.setShortcut("Ctrl+n")
+        new_request_action.setStatusTip("New request")
         new_request_action.triggered.connect(self.new_request)
         file_menu.addAction(new_request_action)
 
-        open_request_action = QAction('&Open request', self)
-        open_request_action.setShortcut('Ctrl+o')
-        open_request_action.setStatusTip('Open request')
+        open_request_action = QAction("&Open request", self)
+        open_request_action.setShortcut("Ctrl+o")
+        open_request_action.setStatusTip("Open request")
         open_request_action.triggered.connect(self.new_request)
         file_menu.addAction(open_request_action)
 
-        open_global_action = QAction('&Open global map', self)
-        open_global_action.setShortcut('Ctrl+Shift+o')
-        open_global_action.setStatusTip('Open global map')
+        open_global_action = QAction("&Open global map", self)
+        open_global_action.setShortcut("Ctrl+Shift+o")
+        open_global_action.setStatusTip("Open global map")
         open_global_action.triggered.connect(self.open_global_map)
         file_menu.addAction(open_global_action)
 
@@ -216,35 +190,36 @@ class MainWindow(QMainWindow):
         file_menu.addAction(separator_action)
         file_menu.setStyleSheet("QMenu::separator { background-color: #ccc; height: 1px; margin: 5px}")
 
-        exit_action = QAction('&Exit', self)
-        exit_action.setShortcut('Ctrl+Q')
-        exit_action.setStatusTip('Exit application')
+        exit_action = QAction("&Exit", self)
+        exit_action.setShortcut("Ctrl+Q")
+        exit_action.setStatusTip("Exit application")
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
 
         # Create Settings menu
-        settings_menu = menubar.addMenu('&Settings')
+        settings_menu = menubar.addMenu("&Settings")
 
-        telegram_settings_action = QAction('&Telegram settings', self)
-        telegram_settings_action.setStatusTip('Telegram setting')
+        telegram_settings_action = QAction("&Telegram settings", self)
+        telegram_settings_action.setStatusTip("Telegram setting")
         telegram_settings_action.triggered.connect(self.open_telegram_settings_window)
         settings_menu.addAction(telegram_settings_action)
 
-        general_settings_action = QAction('&General settings', self)
-        general_settings_action.setStatusTip('General setting')
+        general_settings_action = QAction("&General settings", self)
+        general_settings_action.setStatusTip("General setting")
         general_settings_action.triggered.connect(self.open_general_settings_window)
         settings_menu.addAction(general_settings_action)
 
         # Create About menu
-        about_menu = menubar.addMenu('&About')
+        about_menu = menubar.addMenu("&About")
 
         # Create actions for About menu
-        about_action = QAction('&About', self)
-        about_action.setStatusTip('&About')
+        about_action = QAction("&About", self)
+        about_action.setStatusTip("&About")
         about_action.triggered.connect(self.show_about_dialog)
         about_menu.addAction(about_action)
 
         return menubar
+
 
 class SettingsWidget(QWidget):
     def __init__(self):
@@ -278,7 +253,7 @@ class SettingsWidget(QWidget):
         layout.addWidget(self.slider_position_label)
 
         # Create layout for latitude and longitude
-        lat_long_layout = QHBoxLayout()
+        # lat_long_layout = QHBoxLayout()
 
         # Create layout for latitude
         lat_layout = QHBoxLayout()
@@ -324,19 +299,20 @@ class SettingsWidget(QWidget):
 
     def revert_settings(self):
         try:
-            file_descriptor = os.open('./backend/general_settings.py', os.O_RDONLY)
-            file_contents = os.read(file_descriptor, os.path.getsize('./backend/general_settings.py')).decode()
+            file_descriptor = os.open("./backend/general_settings.py", os.O_RDONLY)
+            file_contents = os.read(file_descriptor, os.path.getsize("./backend/general_settings.py")).decode()
             os.close(file_descriptor)
 
-            for line in file_contents.split('\n'):
-                if line.startswith('meters'):
-                    self.slider.setValue(int(line.split('=')[1].strip()))
-                elif line.startswith('latitude'):
-                    self.lat_line_edit.setText(line.split('=')[1].strip())
-                elif line.startswith('longitude'):
-                    self.long_line_edit.setText(line.split('=')[1].strip())
+            for line in file_contents.split("\n"):
+                if line.startswith("meters"):
+                    self.slider.setValue(int(line.split("=")[1].strip()))
+                elif line.startswith("latitude"):
+                    self.lat_line_edit.setText(line.split("=")[1].strip())
+                elif line.startswith("longitude"):
+                    self.long_line_edit.setText(line.split("=")[1].strip())
         except FileNotFoundError:
             QMessageBox.warning(self, "Warning", "No settings file found.")
+
 
 class TelegramSettingsDialog(QDialog):
     def __init__(self):
@@ -363,35 +339,35 @@ class TelegramSettingsDialog(QDialog):
         layout.addWidget(label)
         self.setLayout(layout)
 
-        self.phone_number_label = QLabel('Phone Number:')
+        self.phone_number_label = QLabel("Phone Number:")
         layout.addWidget(self.phone_number_label)
         self.phone_number_text = QLineEdit()
         layout.addWidget(self.phone_number_text)
 
-        self.telegram_name_label = QLabel('Telegram Name:')
+        self.telegram_name_label = QLabel("Telegram Name:")
         layout.addWidget(self.telegram_name_label)
         self.telegram_name_text = QLineEdit()
         layout.addWidget(self.telegram_name_text)
 
-        self.telegram_api_id_label = QLabel('Telegram API ID:')
+        self.telegram_api_id_label = QLabel("Telegram API ID:")
         layout.addWidget(self.telegram_api_id_label)
         self.telegram_api_id_text = QLineEdit()
         layout.addWidget(self.telegram_api_id_text)
 
-        self.telegram_api_hash_label = QLabel('Telegram API Hash:')
+        self.telegram_api_hash_label = QLabel("Telegram API Hash:")
         layout.addWidget(self.telegram_api_hash_label)
         self.telegram_api_hash_text = QLineEdit()
         layout.addWidget(self.telegram_api_hash_text)
 
-        self.submit_button = QPushButton('Submit')
+        self.submit_button = QPushButton("Submit")
         self.submit_button.clicked.connect(self.save_settings)
         layout.addWidget(self.submit_button)
 
-        self.revert_button = QPushButton('Revert')
+        self.revert_button = QPushButton("Revert")
         self.revert_button.clicked.connect(self.revert_settings)
         layout.addWidget(self.revert_button)
 
-        self.cancel_button = QPushButton('Cancel')
+        self.cancel_button = QPushButton("Cancel")
         self.cancel_button.clicked.connect(self.close)
         layout.addWidget(self.cancel_button)
 
@@ -402,19 +378,19 @@ class TelegramSettingsDialog(QDialog):
 
     def load_settings(self):
         try:
-            file_descriptor = os.open('./backend/telegram_creds.py', os.O_RDONLY)
-            file_contents = os.read(file_descriptor, os.path.getsize('./backend/telegram_creds.py')).decode()
+            file_descriptor = os.open("./backend/telegram_creds.py", os.O_RDONLY)
+            file_contents = os.read(file_descriptor, os.path.getsize("./backend/telegram_creds.py")).decode()
             os.close(file_descriptor)
 
-            for line in file_contents.split('\n'):
-                if line.startswith('phone_number'):
-                    self.phone_number = line.split('=')[1].strip().strip("'")
-                elif line.startswith('telegram_name'):
-                    self.telegram_name = line.split('=')[1].strip().strip("'")
-                elif line.startswith('telegram_api_id'):
-                    self.telegram_api_id = line.split('=')[1].strip().strip("'")
-                elif line.startswith('telegram_api_hash'):
-                    self.telegram_api_hash = line.split('=')[1].strip().strip("'")
+            for line in file_contents.split("\n"):
+                if line.startswith("phone_number"):
+                    self.phone_number = line.split("=")[1].strip().strip("'")
+                elif line.startswith("telegram_name"):
+                    self.telegram_name = line.split("=")[1].strip().strip("'")
+                elif line.startswith("telegram_api_id"):
+                    self.telegram_api_id = line.split("=")[1].strip().strip("'")
+                elif line.startswith("telegram_api_hash"):
+                    self.telegram_api_hash = line.split("=")[1].strip().strip("'")
 
             self.phone_number_text.setText(self.phone_number)
             self.telegram_name_text.setText(self.telegram_name)
@@ -429,7 +405,7 @@ class TelegramSettingsDialog(QDialog):
         self.telegram_api_id = self.telegram_api_id_text.text()
         self.telegram_api_hash = self.telegram_api_hash_text.text()
 
-        file_descriptor = os.open('./backend/telegram_creds.py', os.O_WRONLY | os.O_CREAT)
+        file_descriptor = os.open("./backend/telegram_creds.py", os.O_WRONLY | os.O_CREAT)
         file_contents = (
             f"phone_number = '{self.phone_number}'\n"
             f"telegram_name = '{self.telegram_name}'\n"
@@ -443,21 +419,22 @@ class TelegramSettingsDialog(QDialog):
 
     def revert_settings(self):
         try:
-            file_descriptor = os.open('./backend/telegram_creds.py', os.O_RDONLY)
-            file_contents = os.read(file_descriptor, os.path.getsize('./backend/telegram_creds.py')).decode()
+            file_descriptor = os.open("./backend/telegram_creds.py", os.O_RDONLY)
+            file_contents = os.read(file_descriptor, os.path.getsize("./backend/telegram_creds.py")).decode()
             os.close(file_descriptor)
 
-            for line in file_contents.split('\n'):
-                if line.startswith('phone_number'):
-                    self.phone_number_text.setText(line.split('=')[1].strip().strip("'"))
-                elif line.startswith('telegram_name'):
-                    self.telegram_name_text.setText(line.split('=')[1].strip().strip("'"))
-                elif line.startswith('telegram_api_id'):
-                    self.telegram_api_id_text.setText(line.split('=')[1].strip().strip("'"))
-                elif line.startswith('telegram_api_hash'):
-                    self.telegram_api_hash_text.setText(line.split('=')[1].strip().strip("'"))
+            for line in file_contents.split("\n"):
+                if line.startswith("phone_number"):
+                    self.phone_number_text.setText(line.split("=")[1].strip().strip("'"))
+                elif line.startswith("telegram_name"):
+                    self.telegram_name_text.setText(line.split("=")[1].strip().strip("'"))
+                elif line.startswith("telegram_api_id"):
+                    self.telegram_api_id_text.setText(line.split("=")[1].strip().strip("'"))
+                elif line.startswith("telegram_api_hash"):
+                    self.telegram_api_hash_text.setText(line.split("=")[1].strip().strip("'"))
         except FileNotFoundError:
             QMessageBox.warning(self, "Warning", "No settings file found.")
+
 
 class GeneralSettingsDialog(QDialog):
     def __init__(self):
@@ -473,35 +450,35 @@ class GeneralSettingsDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        self.meters_label = QLabel('Search radius (meters):')
+        self.meters_label = QLabel("Search radius (meters):")
         layout.addWidget(self.meters_label)
         self.meters_text = QLineEdit(str(self.meters))
         layout.addWidget(self.meters_text)
 
-        self.latitude_label = QLabel('Starting Latitude:')
+        self.latitude_label = QLabel("Starting Latitude:")
         layout.addWidget(self.latitude_label)
         self.latitude_text = QLineEdit(str(self.latitude))
         layout.addWidget(self.latitude_text)
 
-        self.longitude_label = QLabel('Starting Longitude:')
+        self.longitude_label = QLabel("Starting Longitude:")
         layout.addWidget(self.longitude_label)
         self.longitude_text = QLineEdit(str(self.longitude))
         layout.addWidget(self.longitude_text)
 
-        self.timesleep_label = QLabel('Delay between search steps (sec):')
+        self.timesleep_label = QLabel("Delay between search steps (sec):")
         layout.addWidget(self.timesleep_label)
         self.timesleep_text = QLineEdit(str(self.timesleep))
         layout.addWidget(self.timesleep_text)
 
-        self.submit_button = QPushButton('Submit')
+        self.submit_button = QPushButton("Submit")
         self.submit_button.clicked.connect(self.save_settings)
         layout.addWidget(self.submit_button)
 
-        self.revert_button = QPushButton('Revert')
+        self.revert_button = QPushButton("Revert")
         self.revert_button.clicked.connect(self.revert_settings)
         layout.addWidget(self.revert_button)
 
-        self.cancel_button = QPushButton('Cancel')
+        self.cancel_button = QPushButton("Cancel")
         self.cancel_button.clicked.connect(self.close)
         layout.addWidget(self.cancel_button)
 
@@ -512,19 +489,19 @@ class GeneralSettingsDialog(QDialog):
 
     def load_settings(self):
         try:
-            file_descriptor = os.open('./backend/general_settings.py', os.O_RDONLY)
-            file_contents = os.read(file_descriptor, os.path.getsize('./backend/general_settings.py')).decode()
+            file_descriptor = os.open("./backend/general_settings.py", os.O_RDONLY)
+            file_contents = os.read(file_descriptor, os.path.getsize("./backend/general_settings.py")).decode()
             os.close(file_descriptor)
 
-            for line in file_contents.split('\n'):
-                if line.startswith('meters'):
-                    self.meters_text.setText(line.split('=')[1].strip())
-                elif line.startswith('latitude'):
-                    self.latitude_text.setText(line.split('=')[1].strip())
-                elif line.startswith('longitude'):
-                    self.longitude_text.setText(line.split('=')[1].strip())
-                elif line.startswith('timesleep'):
-                    self.timesleep_text.setText(line.split('=')[1].strip())
+            for line in file_contents.split("\n"):
+                if line.startswith("meters"):
+                    self.meters_text.setText(line.split("=")[1].strip())
+                elif line.startswith("latitude"):
+                    self.latitude_text.setText(line.split("=")[1].strip())
+                elif line.startswith("longitude"):
+                    self.longitude_text.setText(line.split("=")[1].strip())
+                elif line.startswith("timesleep"):
+                    self.timesleep_text.setText(line.split("=")[1].strip())
         except FileNotFoundError:
             QMessageBox.warning(self, "Warning", "No settings file found.")
 
@@ -535,7 +512,7 @@ class GeneralSettingsDialog(QDialog):
             self.longitude = float(self.longitude_text.text())
             self.timesleep = int(self.timesleep_text.text())
 
-            file_descriptor = os.open('./backend/general_settings.py', os.O_WRONLY | os.O_CREAT)
+            file_descriptor = os.open("./backend/general_settings.py", os.O_WRONLY | os.O_CREAT)
             file_contents = (
                 f"meters = {self.meters}\n"
                 f"latitude = {self.latitude}\n"
@@ -551,21 +528,22 @@ class GeneralSettingsDialog(QDialog):
 
     def revert_settings(self):
         try:
-            file_descriptor = os.open('./backend/general_settings.py', os.O_RDONLY)
-            file_contents = os.read(file_descriptor, os.path.getsize('./backend/general_settings.py')).decode()
+            file_descriptor = os.open("./backend/general_settings.py", os.O_RDONLY)
+            file_contents = os.read(file_descriptor, os.path.getsize("./backend/general_settings.py")).decode()
             os.close(file_descriptor)
 
-            for line in file_contents.split('\n'):
-                if line.startswith('meters'):
-                    self.meters_text.setText(line.split('=')[1].strip())
-                elif line.startswith('latitude'):
-                    self.latitude_text.setText(line.split('=')[1].strip())
-                elif line.startswith('longitude'):
-                    self.longitude_text.setText(line.split('=')[1].strip())
-                elif line.startswith('timesleep'):
-                    self.timesleep_text.setText(line.split('=')[1].strip())
+            for line in file_contents.split("\n"):
+                if line.startswith("meters"):
+                    self.meters_text.setText(line.split("=")[1].strip())
+                elif line.startswith("latitude"):
+                    self.latitude_text.setText(line.split("=")[1].strip())
+                elif line.startswith("longitude"):
+                    self.longitude_text.setText(line.split("=")[1].strip())
+                elif line.startswith("timesleep"):
+                    self.timesleep_text.setText(line.split("=")[1].strip())
         except FileNotFoundError:
             QMessageBox.warning(self, "Warning", "No settings file found.")
+
 
 class AboutDialog(QDialog):
     def __init__(self):
@@ -589,7 +567,8 @@ Twitter: <a href="https://twitter.com/glinkinivan" target=_blank>https://twitter
         layout.addWidget(label)
         self.setLayout(layout)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = QApplication(argv)
     app.setAttribute(Qt.AA_DontUseNativeMenuBar)  # Disable native menu bar for macOS
     window = MainWindow()

@@ -7,3 +7,4 @@ avatars
 __pycache__/
 .DS_Store
 reports-*
+.idea
