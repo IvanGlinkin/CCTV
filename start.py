@@ -16,7 +16,7 @@ from backend.banners import (
     print_combined_data,
     print_current_step,
     print_files_stored,
-    print_geo_coordinater,
+    print_geo_coordinates,
     print_len_steps,
     print_start_harvesting,
     print_successfully,
@@ -77,18 +77,6 @@ phone_number = config['api_config']['phone']
 pattern = generate_pattern((calculate_length(meters + 400) + 800) // 200)  # Adjust the length as needed (x / 2 - 2)
 current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-# Store the initial coordinates and initialize lists to store the coordinates for each step
-initial_latitude = latitude
-initial_longitude = longitude
-
-# Initialize variables to store coordinates and counts
-coordinates = []
-coordinates_count = 0
-coordinates_sum = [0, 0]
-
-# Extract users with distance 500
-filtered_users = []
-
 # Initialize an empty dictionary to store user data
 users_data = {}
 step = 0
@@ -107,8 +95,8 @@ for directory in avatar_directory, report_json_directory, report_html_directory:
 # Banner logo
 print(banner)
 
-# Printing geo cordinates
-print_geo_coordinater(latitude, longitude)
+# Printing geo coordinates
+print_geo_coordinates(latitude, longitude)
 
 # Printing city and country by coordinates
 print_city_by_geo(latitude, longitude)
