@@ -1,4 +1,4 @@
-from .functions import get_location_details
+from backend.functions import get_location_details
 
 # Banner
 banner = """
@@ -23,7 +23,7 @@ banner = """
 """
 
 
-def print_geo_coordinater(lat, lon):
+def print_geo_coordinates(lat, lon):
     print("[ * ] Harvesting information based on the next coordinates:")
     print("\t[ * * ] Latitude: ", lat)
     print("\t[ * * ] Longitude:", lon)
