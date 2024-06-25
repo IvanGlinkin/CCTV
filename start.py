@@ -80,7 +80,6 @@ current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 # Store the initial coordinates and initialize lists to store the coordinates for each step
 initial_latitude = latitude
 initial_longitude = longitude
-step_coordinates = []
 
 # Initialize variables to store coordinates and counts
 coordinates = []
@@ -114,21 +113,15 @@ print_geo_coordinater(latitude, longitude)
 # Printing city and country by coordinates
 print_city_by_geo(latitude, longitude)
 
-# Perform steps according to the pattern
-for i, steps in enumerate(pattern):
-    if i == 0:
-        direction = "starting"
-    elif i % 4 == 1:
-        direction = "west"
-    elif i % 4 == 2:
-        direction = "south"
-    elif i % 4 == 3:
-        direction = "east"
-    else:
-        direction = "north"
+# Calculate steps according to the pattern and store it in the step_coordinates var
+directions = ("north", "west", "south", "east")
+direction = "starting"
+step_coordinates = []
+for i, steps in enumerate(pattern, start=1):
     for _ in range(steps):
         latitude, longitude = calculate_coordinates(latitude, longitude, direction, 0.6)  # 600 meters in kilometers
         step_coordinates.append((latitude, longitude))
+    direction = directions[i % 4]
 
 # Print number of steps
 print_len_steps(len(step_coordinates), meters)
