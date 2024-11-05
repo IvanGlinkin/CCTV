@@ -2,6 +2,10 @@
 Close-Circuit Telegram Vision revolutionizes location tracking with its open-source design and Telegram API integration. Offering precise tracking within 50-100 meters, users can monitor others in real-time for logistics or safety, redefining how we navigate our surroundings.
 PLEASE BE AWARED TELEGRAM STARTED BANNING ACCOUNTS FOR USING "FIND PEOPLE NEARBY" FEATURE
 
+# MAJOR NOTIFICATION
+Since September 6, Telegram disabled the people neaby feature hence our bot is not working anymore! Thank you everyone who was with us all that time.
+![](https://raw.githubusercontent.com/IvanGlinkin/media_support/main/CCTV_disabled_frature.png)
+
 Usage example:
 --------------
 1. Installation 
