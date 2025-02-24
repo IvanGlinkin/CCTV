@@ -3,7 +3,7 @@ Close-Circuit Telegram Vision revolutionizes location tracking with its open-sou
 PLEASE BE AWARED TELEGRAM STARTED BANNING ACCOUNTS FOR USING "FIND PEOPLE NEARBY" FEATURE
 
 # MAJOR NOTIFICATION
-Since September 6, Telegram disabled the people nearby feature hence our bot is not working anymore! Thank you everyone who was with us all that time.
+Since September 6, 2024, Telegram disabled the people nearby feature hence our bot is not working anymore! Thank you everyone who was with us all that time.
 ![](https://raw.githubusercontent.com/IvanGlinkin/media_support/main/CCTV_disabled_frature.png)
 
 Usage example:
